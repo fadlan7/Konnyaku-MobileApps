@@ -6,26 +6,26 @@ import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SplashScreen } from '../screens/SplashScreen/SplashScreen';
 
-
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 function StackNavigation() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name='Splash' component={SplashScreen} />
-            
+            <Stack.Screen name="Splash" component={SplashScreen} />
         </Stack.Navigator>
-    )
+    );
 }
 
-export const AppNavigator = () => {
+function AppNavigator() {
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{flex:1}}>
             <StatusBar style="auto" />
             <NavigationContainer>
-                <StackNavigation/>
+                <StackNavigation />
             </NavigationContainer>
         </SafeAreaView>
     );
-};
+}
+
+export default AppNavigator;
