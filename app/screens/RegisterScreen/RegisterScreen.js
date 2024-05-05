@@ -1,12 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import {
-    KeyboardAvoidingView,
     StyleSheet,
     Text,
-    Image,
     View,
     ScrollView,
-    TextInput,
+    TouchableOpacity,
 } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import CustomTextInput from '../../shared/components/CustomTextInput';
@@ -15,7 +13,7 @@ import CustomPasswordInput from '../../shared/components/CustomPasswordInput';
 import OngkirService from '../../services/ongkirService';
 import { Picker } from '@react-native-picker/picker';
 
-export const RegisterScreen = () => {
+export const RegisterScreen = ({ navigation }) => {
     const { theme } = useTheme();
     const ongkirService = OngkirService();
 
@@ -84,6 +82,7 @@ export const RegisterScreen = () => {
                 },
                 containerInput: {
                     marginTop: 20,
+                    paddingBottom: 50,
                 },
                 selectInput: {
                     borderWidth: 1,
@@ -91,6 +90,13 @@ export const RegisterScreen = () => {
                     borderRadius: 10,
                     paddingHorizontal: 10,
                     marginBottom: 20,
+                    marginTop: 5,
+                },
+                customBtn: {
+                    backgroundColor: theme.colors.secondary,
+                    padding: 10,
+                    borderRadius: 10,
+                    alignItems: 'center',
                 },
             }),
         []
@@ -98,12 +104,15 @@ export const RegisterScreen = () => {
     return (
         <ScrollView
             keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
             style={styles.container}
         >
             <Text style={styles.headerTxt}>Register</Text>
             <View style={{ flexDirection: 'row' }}>
                 <Text style={styles.title}>Have an account? </Text>
-                <Text style={styles.loginTxt}>Login</Text>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                    <Text style={styles.loginTxt}>Login</Text>
+                </TouchableOpacity>
             </View>
             <View style={styles.containerInput}>
                 <Text>Username</Text>
@@ -173,16 +182,11 @@ export const RegisterScreen = () => {
                 <CustomTextInput multiline numberOfLines={4} />
 
                 <CustomButton
-                    title="Register"
+                    title="REGISTER"
                     color="#fff"
                     fontFamily="poppins-semibold"
                     fontSize={18}
-                    style={{
-                        backgroundColor: theme.colors.secondary,
-                        padding: 10,
-                        borderRadius: 10,
-                        alignItems: 'center',
-                    }}
+                    style={styles.customBtn}
                 ></CustomButton>
             </View>
         </ScrollView>

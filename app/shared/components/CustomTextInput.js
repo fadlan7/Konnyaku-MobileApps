@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         paddingHorizontal: 10,
         marginBottom: 20,
+        marginTop: 5,
     },
     input: {
         flex: 1,
