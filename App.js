@@ -3,6 +3,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AppNavigator from './app/navigation/AppNavigator';
 import ThemeContextProvider from './app/context/ThemeContext';
 import * as Font from 'expo-font';
+import { StatusBar } from 'react-native';
 
 export default function App() {
     const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -23,7 +24,7 @@ export default function App() {
     }, []);
 
     if (!fontsLoaded) {
-        return null; // or loading indicator
+        return null;
     }
 
     return (
