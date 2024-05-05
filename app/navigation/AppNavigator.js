@@ -5,6 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { SplashScreen } from '../screens/SplashScreen/SplashScreen';
+import { RegisterScreen } from '../screens/RegisterScreen/RegisterScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -12,14 +13,15 @@ const Stack = createStackNavigator();
 function StackNavigation() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Splash" component={SplashScreen} />
+            {/* <Stack.Screen name="Splash" component={SplashScreen} /> */}
+            <Stack.Screen name="Register" component={RegisterScreen} />
         </Stack.Navigator>
     );
 }
 
 function AppNavigator() {
     return (
-        <SafeAreaView style={{flex:1}}>
+        <SafeAreaView style={{ flex: 1 }}>
             <StatusBar style="auto" />
             <NavigationContainer>
                 <StackNavigation />
