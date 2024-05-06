@@ -106,6 +106,43 @@ export const HomeScreen = ({ navigation }) => {
                 backgroundColor: theme.colors.background,
                 padding: 15,
             },
+            cardContainer: {
+                marginBottom: 10,
+                width: '48%',
+            },
+            prdImage: {
+                width: '100%',
+                height: 200,
+                objectFit: 'cover',
+                borderRadius: 10,
+                borderWidth: 1,
+                borderColor: theme.colors.grey,
+            },
+            favButton: {
+                position: 'absolute',
+                top: 10,
+                right: 10,
+                backgroundColor: theme.colors.secondary,
+                paddingHorizontal: 5,
+                paddingVertical: 5,
+                borderRadius: 50,
+            },
+            prdName: {
+                fontFamily: 'poppins-regular',
+                fontSize: 14,
+            },
+            prdPrice: {
+                fontFamily: 'poppins-semibold',
+                fontSize: 16,
+            },
+            vendorNameContainer: {
+                flexDirection: 'row',
+            },
+            vendorName: {
+                marginLeft: 5,
+                fontFamily: 'poppins-regular',
+                fontSize: 14,
+            },
         })
     );
 
@@ -148,35 +185,16 @@ export const HomeScreen = ({ navigation }) => {
                                 onPress={() =>
                                     navigation.navigate('ProductDetail', item)
                                 }
-                                style={{
-                                    marginBottom: 10,
-                                    width: '48%',
-                                }}
+                                style={styles.cardContainer}
                             >
                                 <View>
                                     <ImageBackground
                                         source={{ uri: item.image.url }}
                                         alt={item.image.name}
-                                        style={{
-                                            width: '100%',
-                                            height: 200,
-                                            objectFit: 'cover',
-                                            borderRadius: 10,
-                                            borderWidth: 1,
-                                            borderColor: theme.colors.grey,
-                                        }}
+                                        style={styles.prdImage}
                                     >
                                         <TouchableOpacity
-                                            style={{
-                                                position: 'absolute',
-                                                top: 10,
-                                                right: 10,
-                                                backgroundColor:
-                                                    theme.colors.secondary,
-                                                paddingHorizontal: 5,
-                                                paddingVertical: 5,
-                                                borderRadius: 50,
-                                            }}
+                                            style={styles.favButton}
                                         >
                                             <Ionicons
                                                 name="heart-outline"
@@ -187,40 +205,20 @@ export const HomeScreen = ({ navigation }) => {
                                     </ImageBackground>
                                 </View>
                                 <View>
-                                    <Text
-                                        style={{
-                                            fontFamily: 'poppins-regular',
-                                            fontSize: 14,
-                                        }}
-                                    >
+                                    <Text style={styles.prdName}>
                                         {item.name}
                                     </Text>
-                                    <Text
-                                        style={{
-                                            fontFamily: 'poppins-semibold',
-                                            fontSize: 16,
-                                        }}
-                                    >
+                                    <Text style={styles.prdPrice}>
                                         {currencyFormat(item.price)}
                                     </Text>
 
-                                    <View
-                                        style={{
-                                            flexDirection: 'row',
-                                        }}
-                                    >
+                                    <View style={styles.vendorNameContainer}>
                                         <Ionicons
                                             name="storefront"
                                             size={16}
                                             color={theme.colors.secondary}
                                         />
-                                        <Text
-                                            style={{
-                                                marginLeft: 5,
-                                                fontFamily: 'poppins-regular',
-                                                fontSize: 14,
-                                            }}
-                                        >
+                                        <Text style={styles.vendorName}>
                                             {item.vendorName}
                                         </Text>
                                     </View>
