@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
+import Lightbox from 'react-native-lightbox-v2';
 
 export const ProductDetailScreen = ({ route, navigation }) => {
     const { theme } = useTheme();
@@ -131,7 +132,7 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                     </TouchableOpacity>
                 </View>
             </View>
-            <View style={{ backgroundColor: 'yellow', borderWidth: 2 }}>
+            <View style={{ borderWidth: 2 }}>
                 <FlatList
                     ref={topRef}
                     data={images}
@@ -145,12 +146,14 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                     }}
                     renderItem={({ item }) => {
                         return (
-                            <View style={styles.containerPrdImage}>
-                                <Image
-                                    source={{ uri: item.url }}
-                                    style={[StyleSheet.absoluteFillObject]}
-                                />
-                            </View>
+                            <Lightbox>
+                                <View style={styles.containerPrdImage}>
+                                    <Image
+                                        source={{ uri: item.url }}
+                                        style={[StyleSheet.absoluteFillObject]}
+                                    />
+                                </View>
+                            </Lightbox>
                         );
                     }}
                 />
