@@ -55,8 +55,7 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
                 paddingHorizontal: 12,
-                marginBottom: 12,
-                marginTop: 8,
+                paddingVertical: 8,
                 borderWidth: 1,
             },
             backButton: {
@@ -66,44 +65,29 @@ export const ProductDetailScreen = ({ route, navigation }) => {
             },
             containerPrdImage: {
                 width: width,
-                height: 400,
-            },
-            cardContainer: {
-                marginBottom: 10,
-                width: '48%',
             },
             prdImage: {
-                width: '100%',
-                height: 200,
-                objectFit: 'cover',
-                borderRadius: 10,
-                borderWidth: 1,
-                borderColor: theme.colors.grey,
+                height: 400,
+                objectFit: 'contain',
             },
-            favButton: {
+            flatListThumbnail: {
                 position: 'absolute',
-                top: 10,
-                right: 10,
-                backgroundColor: theme.colors.secondary,
-                paddingHorizontal: 5,
+                top: 300,
+                backgroundColor: 'white',
+                marginHorizontal: 20,
                 paddingVertical: 5,
-                borderRadius: 50,
+                borderRadius: 10,
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 1 },
+                shadowOpacity: 1,
+                elevation: 5,
             },
-            prdName: {
-                fontFamily: 'poppins-regular',
-                fontSize: 14,
-            },
-            prdPrice: {
-                fontFamily: 'poppins-semibold',
-                fontSize: 16,
-            },
-            vendorNameContainer: {
-                flexDirection: 'row',
-            },
-            vendorName: {
-                marginLeft: 5,
-                fontFamily: 'poppins-regular',
-                fontSize: 14,
+            imgThumbnail: {
+                width: IMAGE_SIZE,
+                height: IMAGE_SIZE,
+                borderRadius: 12,
+                marginRight: 10,
+                borderWidth: 2,
             },
         })
     );
@@ -119,14 +103,13 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                 <View
                     style={{
                         flexDirection: 'row',
-                        columnGap: 16,
                         alignItems: 'center',
                     }}
                 >
                     <TouchableOpacity>
                         <Ionicons
-                            name="share-social"
-                            size={18}
+                            name="heart-outline"
+                            size={24}
                             color={theme.colors.text}
                         />
                     </TouchableOpacity>
@@ -150,7 +133,7 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                                 <View style={styles.containerPrdImage}>
                                     <Image
                                         source={{ uri: item.url }}
-                                        style={[StyleSheet.absoluteFillObject]}
+                                        style={styles.prdImage}
                                     />
                                 </View>
                             </Lightbox>
@@ -163,7 +146,7 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                     keyExtractor={(item) => item.id}
                     horizontal
                     showsHorizontalScrollIndicator={false}
-                    style={{ position: 'absolute', top: 300 }}
+                    style={styles.flatListThumbnail}
                     contentContainerStyle={{ paddingHorizontal: SPACING }}
                     renderItem={({ item, index }) => {
                         return (
@@ -172,17 +155,15 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                             >
                                 <Image
                                     source={{ uri: item.url }}
-                                    style={{
-                                        width: IMAGE_SIZE,
-                                        height: IMAGE_SIZE,
-                                        borderRadius: 12,
-                                        marginRight: 10,
-                                        borderWidth: 2,
-                                        borderColor:
-                                            activeIndex === index
-                                                ? '#000'
-                                                : 'transparent',
-                                    }}
+                                    style={[
+                                        styles.imgThumbnail,
+                                        {
+                                            borderColor:
+                                                activeIndex === index
+                                                    ? '#000'
+                                                    : 'transparent',
+                                        },
+                                    ]}
                                 />
                             </TouchableOpacity>
                         );
