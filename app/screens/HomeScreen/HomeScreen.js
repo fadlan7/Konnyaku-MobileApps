@@ -27,10 +27,38 @@ export const HomeScreen = ({ navigation }) => {
             stock: 30,
             description:
                 'Beng Beng adalah salah satu merek wafer coklat yang diproduksi oleh Mayora.',
-            image: {
-                name: 'beng-beng',
-                url: 'https://img.ws.mms.shopee.co.id/db572b217ce298e397ea8fc452302f8a',
-            },
+            images: [
+                {
+                    id: '1',
+                    name: 'beng-beng',
+                    url: 'https://img.ws.mms.shopee.co.id/db572b217ce298e397ea8fc452302f8a',
+                },
+                {
+                    id: '2',
+                    name: 'beng-beng',
+                    url: 'https://img.ws.mms.shopee.co.id/db572b217ce298e397ea8fc452302f8a',
+                },
+                {
+                    id: '3',
+                    name: 'beng-beng',
+                    url: 'https://img.ws.mms.shopee.co.id/db572b217ce298e397ea8fc452302f8a',
+                },
+                {
+                    id: '4',
+                    name: 'beng-beng',
+                    url: 'https://img.ws.mms.shopee.co.id/db572b217ce298e397ea8fc452302f8a',
+                },
+                {
+                    id: '5',
+                    name: 'beng-beng',
+                    url: 'https://img.ws.mms.shopee.co.id/db572b217ce298e397ea8fc452302f8a',
+                },
+                {
+                    id: '6',
+                    name: 'beng-beng',
+                    url: 'https://img.ws.mms.shopee.co.id/db572b217ce298e397ea8fc452302f8a',
+                },
+            ],
         },
         {
             id: '2',
@@ -40,10 +68,38 @@ export const HomeScreen = ({ navigation }) => {
             stock: 10,
             description:
                 'Sabun Mandi Cair Dettol Cool merupakan sabun cair anti bakteri untuk memberikan perlindungan keluarga anda setiap harinya dari kuman penyebab timbulnya bau badan serta memberikan sensasi mentol yang menyegarkan.',
-            image: {
-                name: 'detol-cool-370g',
-                url: 'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full/catalog-image/MTA-16726020/dettol_dettol_sabun_mandi_cair_cool_370_g_full02_p0k26hsn.jpeg',
-            },
+            images: [
+                {
+                    id: '1',
+                    name: 'detol-cool-370g',
+                    url: 'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full/catalog-image/MTA-16726020/dettol_dettol_sabun_mandi_cair_cool_370_g_full02_p0k26hsn.jpeg',
+                },
+                {
+                    id: '2',
+                    name: 'detol-cool-370g',
+                    url: 'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full/catalog-image/MTA-16726020/dettol_dettol_sabun_mandi_cair_cool_370_g_full02_p0k26hsn.jpeg',
+                },
+                {
+                    id: '3',
+                    name: 'detol-cool-370g',
+                    url: 'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full/catalog-image/MTA-16726020/dettol_dettol_sabun_mandi_cair_cool_370_g_full02_p0k26hsn.jpeg',
+                },
+                {
+                    id: '4',
+                    name: 'detol-cool-370g',
+                    url: 'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full/catalog-image/MTA-16726020/dettol_dettol_sabun_mandi_cair_cool_370_g_full02_p0k26hsn.jpeg',
+                },
+                {
+                    id: '5',
+                    name: 'detol-cool-370g',
+                    url: 'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full/catalog-image/MTA-16726020/dettol_dettol_sabun_mandi_cair_cool_370_g_full02_p0k26hsn.jpeg',
+                },
+                {
+                    id: '6',
+                    name: 'detol-cool-370g',
+                    url: 'https://www.static-src.com/wcsstore/Indraprastha/images/catalog/full/catalog-image/MTA-16726020/dettol_dettol_sabun_mandi_cair_cool_370_g_full02_p0k26hsn.jpeg',
+                },
+            ],
         },
         {
             id: '3',
@@ -53,10 +109,38 @@ export const HomeScreen = ({ navigation }) => {
             stock: 15,
             description:
                 'Es Susu Rasa Kopi dan Karamel dengan saus Cokelat dan Butiran Cokelat. Cara Penyimpanan : Simpan pada suhu beku di bawah -18C.',
-            image: {
-                name: 'walls-cornetto',
-                url: 'https://assets.klikindomaret.com/products/20128054/20128054_1.jpg',
-            },
+            images: [
+                {
+                    id: '1',
+                    name: 'walls-cornetto',
+                    url: 'https://assets.klikindomaret.com/products/20128054/20128054_1.jpg',
+                },
+                {
+                    id: '2',
+                    name: 'walls-cornetto',
+                    url: 'https://assets.klikindomaret.com/products/20128054/20128054_1.jpg',
+                },
+                {
+                    id: '3',
+                    name: 'walls-cornetto',
+                    url: 'https://assets.klikindomaret.com/products/20128054/20128054_1.jpg',
+                },
+                {
+                    id: '4',
+                    name: 'walls-cornetto',
+                    url: 'https://assets.klikindomaret.com/products/20128054/20128054_1.jpg',
+                },
+                {
+                    id: '5',
+                    name: 'walls-cornetto',
+                    url: 'https://assets.klikindomaret.com/products/20128054/20128054_1.jpg',
+                },
+                {
+                    id: '6',
+                    name: 'walls-cornetto',
+                    url: 'https://assets.klikindomaret.com/products/20128054/20128054_1.jpg',
+                },
+            ],
         },
         {
             id: '4',
@@ -66,10 +150,43 @@ export const HomeScreen = ({ navigation }) => {
             stock: 20,
             description:
                 'Pringles Potato Crisps Original adalah salah satu varian keripik kentang Pringles. Dengan teksturnya yang tebal dan berbentuk pelana, keripik kentang ini disusun dalam sebuah tabung berlapis alumunium foil yang tertutup rapat sehingga terjaga kerenyahan dan keutuhannya. Anda akan merasakan kelezatan yang tebal dan utuh dalam setiap tabungnya. Rasa gurih asinnya yang istimewa akan menjadikan keripik kentang ini menjadi makanan ringat favorit Anda karena bumbunya yang unik dan merata ke seluruh keripik kentang yang ada dalam tabungnya. Rasakan serunya banyak hal dalam hidup Anda bersama kerenyahan asli kentang dari Pringles Potato Crisps Original',
-            image: {
-                name: 'Pringles-potato-crisp-ori',
-                url: 'https://images.tokopedia.net/img/cache/700/VqbcmM/2023/9/8/c59a2f32-941f-4c33-9f29-fd238394e6a3.png',
-            },
+            images: [
+                {
+                    id: '1',
+                    name: 'Pringles-potato-crisp-ori',
+                    url: 'https://images.tokopedia.net/img/cache/700/VqbcmM/2023/9/8/c59a2f32-941f-4c33-9f29-fd238394e6a3.png',
+                },
+                {
+                    id: '2',
+                    name: 'Pringles-potato-crisp-ori',
+                    url: 'https://images.tokopedia.net/img/cache/700/VqbcmM/2023/9/8/c59a2f32-941f-4c33-9f29-fd238394e6a3.png',
+                },
+                {
+                    id: '3',
+                    name: 'Pringles-potato-crisp-ori',
+                    url: 'https://images.tokopedia.net/img/cache/700/VqbcmM/2023/9/8/c59a2f32-941f-4c33-9f29-fd238394e6a3.png',
+                },
+                {
+                    id: '4',
+                    name: 'Pringles-potato-crisp-ori',
+                    url: 'https://images.tokopedia.net/img/cache/700/VqbcmM/2023/9/8/c59a2f32-941f-4c33-9f29-fd238394e6a3.png',
+                },
+                {
+                    id: '5',
+                    name: 'Pringles-potato-crisp-ori',
+                    url: 'https://images.tokopedia.net/img/cache/700/VqbcmM/2023/9/8/c59a2f32-941f-4c33-9f29-fd238394e6a3.png',
+                },
+                {
+                    id: '6',
+                    name: 'Pringles-potato-crisp-ori',
+                    url: 'https://images.tokopedia.net/img/cache/700/VqbcmM/2023/9/8/c59a2f32-941f-4c33-9f29-fd238394e6a3.png',
+                },
+                {
+                    id: '7',
+                    name: 'Pringles-potato-crisp-ori',
+                    url: 'https://images.tokopedia.net/img/cache/700/VqbcmM/2023/9/8/c59a2f32-941f-4c33-9f29-fd238394e6a3.png',
+                },
+            ],
         },
         {
             id: '5',
@@ -79,10 +196,38 @@ export const HomeScreen = ({ navigation }) => {
             stock: 15,
             description:
                 'Es Susu Rasa Kopi dan Karamel dengan saus Cokelat dan Butiran Cokelat. Cara Penyimpanan : Simpan pada suhu beku di bawah -18C.',
-            image: {
-                name: 'walls-cornetto',
-                url: 'https://assets.klikindomaret.com/products/20128054/20128054_1.jpg',
-            },
+            images: [
+                {
+                    id: '1',
+                    name: 'walls-cornetto',
+                    url: 'https://assets.klikindomaret.com/products/20128054/20128054_1.jpg',
+                },
+                {
+                    id: '2',
+                    name: 'walls-cornetto',
+                    url: 'https://assets.klikindomaret.com/products/20128054/20128054_1.jpg',
+                },
+                {
+                    id: '3',
+                    name: 'walls-cornetto',
+                    url: 'https://assets.klikindomaret.com/products/20128054/20128054_1.jpg',
+                },
+                {
+                    id: '4',
+                    name: 'walls-cornetto',
+                    url: 'https://assets.klikindomaret.com/products/20128054/20128054_1.jpg',
+                },
+                {
+                    id: '5',
+                    name: 'walls-cornetto',
+                    url: 'https://assets.klikindomaret.com/products/20128054/20128054_1.jpg',
+                },
+                {
+                    id: '6',
+                    name: 'walls-cornetto',
+                    url: 'https://assets.klikindomaret.com/products/20128054/20128054_1.jpg',
+                },
+            ],
         },
         {
             id: '6',
@@ -92,10 +237,38 @@ export const HomeScreen = ({ navigation }) => {
             stock: 20,
             description:
                 'Pringles Potato Crisps Original adalah salah satu varian keripik kentang Pringles. Dengan teksturnya yang tebal dan berbentuk pelana, keripik kentang ini disusun dalam sebuah tabung berlapis alumunium foil yang tertutup rapat sehingga terjaga kerenyahan dan keutuhannya. Anda akan merasakan kelezatan yang tebal dan utuh dalam setiap tabungnya. Rasa gurih asinnya yang istimewa akan menjadikan keripik kentang ini menjadi makanan ringat favorit Anda karena bumbunya yang unik dan merata ke seluruh keripik kentang yang ada dalam tabungnya. Rasakan serunya banyak hal dalam hidup Anda bersama kerenyahan asli kentang dari Pringles Potato Crisps Original',
-            image: {
-                name: 'Pringles-potato-crisp-ori',
-                url: 'https://images.tokopedia.net/img/cache/700/VqbcmM/2023/9/8/c59a2f32-941f-4c33-9f29-fd238394e6a3.png',
-            },
+            images: [
+                {
+                    id: '1',
+                    name: 'Pringles-potato-crisp-ori',
+                    url: 'https://images.tokopedia.net/img/cache/700/VqbcmM/2023/9/8/c59a2f32-941f-4c33-9f29-fd238394e6a3.png',
+                },
+                {
+                    id: '2',
+                    name: 'Pringles-potato-crisp-ori',
+                    url: 'https://images.tokopedia.net/img/cache/700/VqbcmM/2023/9/8/c59a2f32-941f-4c33-9f29-fd238394e6a3.png',
+                },
+                {
+                    id: '3',
+                    name: 'Pringles-potato-crisp-ori',
+                    url: 'https://images.tokopedia.net/img/cache/700/VqbcmM/2023/9/8/c59a2f32-941f-4c33-9f29-fd238394e6a3.png',
+                },
+                {
+                    id: '4',
+                    name: 'Pringles-potato-crisp-ori',
+                    url: 'https://images.tokopedia.net/img/cache/700/VqbcmM/2023/9/8/c59a2f32-941f-4c33-9f29-fd238394e6a3.png',
+                },
+                {
+                    id: '5',
+                    name: 'Pringles-potato-crisp-ori',
+                    url: 'https://images.tokopedia.net/img/cache/700/VqbcmM/2023/9/8/c59a2f32-941f-4c33-9f29-fd238394e6a3.png',
+                },
+                {
+                    id: '6',
+                    name: 'Pringles-potato-crisp-ori',
+                    url: 'https://images.tokopedia.net/img/cache/700/VqbcmM/2023/9/8/c59a2f32-941f-4c33-9f29-fd238394e6a3.png',
+                },
+            ],
         },
     ]);
 
@@ -117,6 +290,7 @@ export const HomeScreen = ({ navigation }) => {
                 borderRadius: 10,
                 borderWidth: 1,
                 borderColor: theme.colors.grey,
+                overflow: 'hidden',
             },
             favButton: {
                 position: 'absolute',
@@ -189,8 +363,8 @@ export const HomeScreen = ({ navigation }) => {
                             >
                                 <View>
                                     <ImageBackground
-                                        source={{ uri: item.image.url }}
-                                        alt={item.image.name}
+                                        source={{ uri: item.images[0].url }}
+                                        alt={item.images[0].name}
                                         style={styles.prdImage}
                                     >
                                         <TouchableOpacity

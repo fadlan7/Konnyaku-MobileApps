@@ -104,6 +104,8 @@ export const RegisterScreen = ({ navigation }) => {
         if (!camera.canceled) {
             const uri = camera.assets[0].uri;
             setSelfieImage(uri);
+            console.log(camera)
+            // fileName, fileSize, mimeType, path
         }
     };
 

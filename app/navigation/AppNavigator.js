@@ -13,6 +13,7 @@ import { FavoriteScreen } from '../screens/FavoriteScreen/FavoriteScreen';
 import { HistoryScreen } from '../screens/TransactionHistoryScreen/HistoryScreen';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
+import { ProductDetailScreen } from '../screens/ProductDetailScreen/ProductDetailScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -57,10 +58,11 @@ function StackNavigation() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             {/* <Stack.Screen name="Splash" component={SplashScreen} /> */}
-            {/* <Stack.Screen name="Onboarding" component={OnboardingScreen} /> */}
-            {/* <Stack.Screen name="Register" component={RegisterScreen} /> */}
+            {/* <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} /> */}
             {/* <Stack.Screen name="Login" component={LoginScreen} /> */}
-            <Stack.Screen name="TabHome" component={TabNavigation} />
+            <Stack.Screen name="TabHome" component={TabNavigation} /> 
+            <Stack.Screen name='ProductDetail' component={ProductDetailScreen}/>
         </Stack.Navigator>
     );
 }
