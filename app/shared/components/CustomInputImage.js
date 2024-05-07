@@ -18,7 +18,6 @@ export const CustomInputImage = ({ imageUri, onPress }) => {
                     justifyContent: 'center',
                     borderRadius: 10,
                     marginTop: 5,
-                    marginBottom: 20
                 }}
             >
                 {imageUri == '' ? (
