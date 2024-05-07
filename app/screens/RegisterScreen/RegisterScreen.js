@@ -20,6 +20,7 @@ import { Controller, useForm } from 'react-hook-form';
 import * as z from 'zod';
 import AuthService from '../../services/konnyakuApi/AuthService';
 import { zodResolver } from '@hookform/resolvers/zod';
+import * as FileSystem from 'expo-file-system';
 
 export const RegisterScreen = ({ navigation }) => {
     const schema = z.object({
@@ -67,7 +68,7 @@ export const RegisterScreen = ({ navigation }) => {
         formState: { errors },
     } = useForm({ mode: 'onTouched', resolver: zodResolver(schema) });
 
-    const register = AuthService();
+    const authService = AuthService();
     const { theme } = useTheme();
     const ongkirService = OngkirService();
 
@@ -80,6 +81,8 @@ export const RegisterScreen = ({ navigation }) => {
     const [selectedCity, setSelectedCity] = useState({ id: '', name: '' });
     const [ktpImage, setKtpImage] = useState(null);
     const [selfieImage, setSelfieImage] = useState(null);
+    const [ktpValidation, setKtpValidation] = useState(true);
+    const [selfieValidation, setselfieValidation] = useState(true);
     const [permissionGranted, setPermissionGranted] = useState(null);
 
     useEffect(() => {
@@ -134,12 +137,11 @@ export const RegisterScreen = ({ navigation }) => {
         const camera = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            quality: 1,
+            quality: 0.1,
         });
 
         if (!camera.canceled) {
-            const uri = camera.assets[0].uri;
-            setKtpImage(uri);
+            setKtpImage(camera.assets[0]);
         }
     };
 
@@ -147,47 +149,81 @@ export const RegisterScreen = ({ navigation }) => {
         const camera = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            quality: 1,
+            quality: 0.1,
         });
 
         if (!camera.canceled) {
-            const uri = camera.assets[0].uri;
-            setSelfieImage(uri);
             console.log(camera);
+            setSelfieImage(camera.assets[0]);
             // fileName, fileSize, mimeType, path
         }
+    };
+    const getFileInfo = async (fileUri) => {
+        const fileInfo = await FileSystem.getInfoAsync(fileUri);
+        return fileInfo.size;
     };
 
     const onSubmit = async (data) => {
         try {
-            if (ktpImage === null || selfieImage === null) {
+            if (ktpImage === null) {
+                setKtpValidation(false);
+                return;
+            } else if (selfieImage === null) {
+                setselfieValidation(false);
                 return;
             } else {
-                const { email, password, profileImage } = data;
-                console.log(ktpImage)
-                console.log(selfieImage)
-                console.log(data);
-            }
-            // const data = new FormData();
+                setKtpValidation(true);
+                setselfieValidation(true);
 
-            // data.append('daftar', JSON.stringify({ email, password }));
-            // data.append('profileImage', {
-            //     uri: profileImage.uri,
-            //     type: 'image/jpeg',
-            //     name: 'image.jpg',
-            // });
-            // await authService.registerMutation.mutateAsync(data);
-            // navigation.replace('Homepage');
-        } catch (error) {
-            if (error instanceof z.ZodError) {
-                Alert.alert(
-                    'Validation Error',
-                    error.errors.map((err) => err.message).join('\n')
+                const selfieImageSize = await getFileInfo(selfieImage.uri);
+                const ktpImageSize = await getFileInfo(ktpImage.uri);
+
+                const { email, password, mobilePhoneNo, name, street } = data;
+                const formData = new FormData();
+
+                const registrationData = {
+                    username: email,
+                    password,
+                    mobilePhoneNo,
+                    name,
+                    addressRequest: {
+                        street,
+                        provinceId: selectedProvince.id,
+                        provinceName: selectedProvince.name,
+                        cityId: selectedCity.id,
+                        cityName: selectedCity.name,
+                    },
+                };
+
+                formData.append(
+                    'registration',
+                    JSON.stringify(registrationData)
                 );
-            } else {
-                console.error('Error:', error);
-                Alert.alert('Error', error.message);
+
+                const images = [
+                    {
+                        uri: selfieImage.uri,
+                        type: 'image/jpeg',
+                        name: 'selfie.jpeg',
+                    },
+                    {
+                        uri: ktpImage.uri,
+                        type: 'image/jpeg',
+                        name: 'ktp.jpeg',
+                    },
+                ];
+
+                images.forEach((image) => {
+                    formData.append('images', image);
+                });
+
+                
+                authService.registerMutation.mutate(formData);
+                console.log(formData);
             }
+        } catch (error) {
+            console.error('Error:', error);
+            Alert.alert('Error', error.message);
         }
     };
 
@@ -509,23 +545,25 @@ export const RegisterScreen = ({ navigation }) => {
                         <View style={styles.containerInputAndError}>
                             <Text>KTP Photo</Text>
                             <CustomInputImage
-                                imageUri={ktpImage}
+                                imageUri={ktpImage?.uri}
                                 onPress={handleTakeKtp}
                             />
-                            {ktpImage === null && (
+                            {ktpValidation === false ? (
                                 <Text style={styles.formErrorMessage}>
                                     please take a picture
                                 </Text>
+                            ) : (
+                                <></>
                             )}
                         </View>
 
                         <View style={styles.containerInputAndError}>
                             <Text>Selfie Photo</Text>
                             <CustomInputImage
-                                imageUri={selfieImage}
+                                imageUri={selfieImage?.uri}
                                 onPress={handleTakeSelfie}
                             />
-                            {selfieImage === null && (
+                            {ktpValidation === false && (
                                 <Text style={styles.formErrorMessage}>
                                     please take a picture
                                 </Text>
