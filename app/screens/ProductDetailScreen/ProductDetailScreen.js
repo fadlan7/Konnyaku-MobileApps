@@ -184,43 +184,82 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                     </View>
                 }
                 ListFooterComponent={
-                    // <RenderHTML
-                    //     contentWidth={width}
-                    //     source={{
-                    //         html: `<div style="max-width: 40rem; margin: 0 auto; color: #17224f;">
-                    //     <h1 style="line-height: 1.3; font-size: 40px; margin: 3rem 0 0;">Familiar. Fully-featu'red. <br>Built for React.</h1>
-                    //     <p style="line-height: 1.5;">With over 120,000 installs per week, it\'s already proven. <br>TinyMCEs React integration is a breeze. TinyMCE is feature-rich <br>for users and delivers the flexibility developers demand.</p>                    <div style="width: 100%; display: flex; flex-wrap: wrap;"><div style="flex: 1;"><p style="line-height: 1.5;">Use TinyMCE React WYSIWYG editor as:</p>                    <ul><li style="margin: 10px 0;"><span style="font-size: 18px;">A <strong>basic</strong> editor</span></li><li style="margin: 10px 0;"><span style="font-size: 18px;">An advanced 📝 editor</span></li><li style="margin: 10px 0;"><span style="font-size: 18px;">An AI-powered 🪄✨ editor </span></li>                    <li style="margin: 10px 0;"><span style="font-size: 18px;">A {{template-based}} editor</span></li>                    <li style="margin: 10px 0;"><span style="font-size: 18px;">A totally <span style="color: #00bc84; font-size: 16px;"><code>&lt;customized&gt;</code></span> editor</span></li></ul>                    <p style="font-size: 18px; color: #17224f; line-height: 1.3;"><strong>Play with this demo to see how it works</strong></p>                    </div><div><img class="frameworks-logo" style="max-width: 100%; margin-top: 50px;" role="presentation" src="blob:https://www.tiny.cloud/b44f9e00-9c6a-4d48-96e8-039080fd6e7b" alt="React Logo" width="147"></div></div></div>`,
-                    //     }}
-                    // />
-                    <View
-                        style={{
-                            paddingHorizontal: 20,
-                            marginTop: 20,
-                            backgroundColor: 'yellow',
-                        }}
-                    >
-                        <Text
+                    <>
+                        <View
                             style={{
-                                fontSize: 18,
-                                fontFamily: 'poppins-bold',
-                                color: theme.colors.text,
+                                paddingHorizontal: 20,
+                                marginTop: 20,
+                                backgroundColor: 'yellow',
                             }}
                         >
-                            {name}
-                        </Text>
-                        <Text
-                            style={{
-                                fontSize: 18,
-                                fontFamily: 'poppins-semibold',
-                                color: theme.colors.text,
-                                marginTop: 20
+                            <Text
+                                style={{
+                                    fontSize: 18,
+                                    fontFamily: 'poppins-bold',
+                                    color: theme.colors.text,
+                                }}
+                            >
+                                {name}
+                            </Text>
+                            <Text
+                                style={{
+                                    fontSize: 18,
+                                    fontFamily: 'poppins-semibold',
+                                    color: theme.colors.text,
+                                    marginTop: 20,
+                                }}
+                            >
+                                Product Details
+                            </Text>
+                            <Text>{description}</Text>
+                            <Text>{vendorName}</Text>
+                        </View>
+                        <RenderHTML
+                            contentWidth={width}
+                            source={{
+                                html: `<h1>Nama Produk</h1>
+                                <p>Deskripsi singkat tentang produk ini akan memberikan gambaran kepada pelanggan tentang fitur, manfaat, dan nilai yang ditawarkan oleh produk.</p>
+                                
+                                <h2>Fitur Utama:</h2>
+                                <ul>
+                                    <li>Fitur 1: Deskripsi singkat tentang fitur 1.</li>
+                                    <li>Fitur 2: Deskripsi singkat tentang fitur 2.</li>
+                                    <li>Fitur 3: Deskripsi singkat tentang fitur 3.</li>
+                                </ul>
+                                
+                                <h2>Manfaat:</h2>
+                                <p>Produk ini akan membantu pelanggan dalam hal-hal berikut:</p>
+                                <ul>
+                                    <li>Manfaat 1: Deskripsi singkat tentang manfaat 1.</li>
+                                    <li>Manfaat 2: Deskripsi singkat tentang manfaat 2.</li>
+                                    <li>Manfaat 3: Deskripsi singkat tentang manfaat 3.</li>
+                                </ul>
+                                
+                                <h2>Spesifikasi Teknis:</h2>
+                                <table>
+                                    <tr>
+                                        <th>Spesifikasi</th>
+                                        <th>Detail</th>
+                                    </tr>
+                                    <tr>
+                                        <td>Spesifikasi 1</td>
+                                        <td>Detail spesifikasi 1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Spesifikasi 2</td>
+                                        <td>Detail spesifikasi 2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Spesifikasi 3</td>
+                                        <td>Detail spesifikasi 3</td>
+                                    </tr>
+                                </table>
+                                
+                                <p>Harga: <strong>RpXXX,XXX</strong></p>
+                                <p>Untuk informasi lebih lanjut atau pembelian, silakan <a href="kontak.html">hubungi kami</a>.</p>`,
                             }}
-                        >
-                            Product Details
-                        </Text>
-                        <Text>{description}</Text>
-                        <Text>{vendorName}</Text>
-                    </View>
+                        />
+                    </>
                 }
             />
         </View>

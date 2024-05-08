@@ -13,10 +13,13 @@ import CustomTextInput from '../../shared/components/CustomTextInput';
 import { Ionicons } from '@expo/vector-icons';
 import { currencyFormat } from '../../utils/currencyFormat';
 import { ImageBackground } from 'react-native';
+import AuthService from '../../services/konnyakuApi/AuthService';
+import LocalStorage from '../../utils/LocalStorage';
 
 export const HomeScreen = ({ navigation }) => {
     const { theme } = useTheme();
     const [refreshing, setRefreshing] = useState(false);
+    const authService = AuthService();
 
     const [dummyData, setDummyData] = useState([
         {

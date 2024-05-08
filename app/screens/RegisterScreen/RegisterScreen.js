@@ -20,7 +20,6 @@ import { Controller, useForm } from 'react-hook-form';
 import * as z from 'zod';
 import AuthService from '../../services/konnyakuApi/AuthService';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as FileSystem from 'expo-file-system';
 import { Alert } from 'react-native';
 
 export const RegisterScreen = ({ navigation }) => {
@@ -28,6 +27,7 @@ export const RegisterScreen = ({ navigation }) => {
         email: z
             .string()
             .email('This is not a valid email address')
+            .optional()
             .refine(
                 (val) => val !== undefined && val.length > 0,
                 'Email is required'
@@ -35,24 +35,28 @@ export const RegisterScreen = ({ navigation }) => {
         password: z
             .string()
             .min(8, 'Password must be at least 8 characters')
+            .optional()
             .refine(
                 (val) => val !== undefined && val.length > 0,
                 'Password is required'
             ),
         name: z
             .string()
+            .optional()
             .refine(
                 (val) => val !== undefined && val.length > 0,
                 'Name is required'
             ),
         mobilePhoneNo: z
             .string()
+            .optional()
             .refine(
                 (val) => val !== undefined && val.length > 0,
                 'Mobile phone number is required'
             ),
         street: z
             .string()
+            .optional()
             .refine(
                 (val) => val !== undefined && val.length > 0,
                 'Street is required'
@@ -210,62 +214,26 @@ export const RegisterScreen = ({ navigation }) => {
                     name: `ktp-${email}.jpg`,
                 });
 
-                // authService.registerMutation.mutate(formData);
-                await authService.registerUser(formData);
+                const response = await authService.registerUser(formData);
+
+
+                if (response.data.statusCode === 201) {
+                    clearForm();
+                    navigation.replace('Login');
+                    Alert.alert('Success', 'Registration Success')
+                }
             }
         } catch (error) {
             Alert.alert('Error', error.response.data.message);
         }
     };
 
-    // const onSubmit = async (data) => {
-    //     try {
-    //         if (!ktpImage) {
-    //             setKtpValidation(false);
-    //             return;
-    //         } else if (!selfieImage) {
-    //             setSelfieValidation(false);
-    //             return;
-    //         } else {
-    //             setKtpValidation(true);
-    //             setSelfieValidation(true);
-
-    //             const { email, password, mobilePhoneNo, name, street } = data;
-
-    //             const formData = new FormData();
-    //             const registrationData = {
-    //                 username: email,
-    //                 password,
-    //                 mobilePhoneNo,
-    //                 name,
-    //                 addressRequest: {
-    //                     street,
-    //                     provinceId: '12',
-    //                     provinceName: 'Jabar',
-    //                     cityId: '1',
-    //                     cityName: 'Bdng',
-    //                 },
-    //             };
-
-    //             formData.append('registration', JSON.stringify(registrationData));
-    //             formData.append('selfieImage', {
-    //                 uri: selfieImage.uri,
-    //                 type: 'image/jpeg',
-    //                 name: 'selfie.jpeg',
-    //             });
-    //             formData.append('ktpImage', {
-    //                 uri: ktpImage.uri,
-    //                 type: 'image/jpeg',
-    //                 name: 'ktp.jpeg',
-    //             });
-
-    //             await authService.registerMutation.mutate(formData);
-    //         }
-    //     } catch (error) {
-    //         console.error('Error:', error);
-    //         Alert.alert('Error', error.message);
-    //     }
-    // };
+    const clearForm = () => {
+        setKtpImage(null)
+        setSelfieImage(null)
+        reset();
+        clearErrors();
+    };
 
     const styles = useMemo(
         () =>

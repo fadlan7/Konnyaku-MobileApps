@@ -12,10 +12,68 @@ import { useTheme } from '../../context/ThemeContext';
 import CustomTextInput from '../../shared/components/CustomTextInput';
 import CustomButton from '../../shared/components/CustomButton';
 import CustomPasswordInput from '../../shared/components/CustomPasswordInput';
+import { Controller, useForm } from 'react-hook-form';
+import * as z from 'zod';
+import AuthService from '../../services/konnyakuApi/AuthService';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Alert } from 'react-native';
+import LocalStorage from '../../utils/LocalStorage';
 
 export const LoginScreen = ({ navigation }) => {
+    const schema = z.object({
+        email: z
+            .string()
+            .email('This is not a valid email address')
+            .optional()
+            .refine(
+                (val) => val !== undefined && val.length > 0,
+                'Email is required'
+            ),
+        password: z
+            .string()
+            .min(8, 'Password must be at least 8 characters')
+            .optional()
+            .refine(
+                (val) => val !== undefined && val.length > 0,
+                'Password is required'
+            ),
+    });
+
+    const {
+        control,
+        handleSubmit,
+        clearErrors,
+        reset,
+        formState: { errors },
+    } = useForm({ mode: 'onTouched', resolver: zodResolver(schema) });
+
+    const authService = AuthService();
     const { theme } = useTheme();
     const { width } = Dimensions.get('window');
+    const localStorage = LocalStorage()
+
+    const onSubmit = async (data) => {
+        try {
+            const { email, password } = data;
+
+            const loginData = { username: email, password };
+            const response = await authService.login(loginData);
+
+            if (response.statusCode === 200) {
+                clearForm();
+                localStorage.setData('token', response.data.token);
+                navigation.replace('TabHome');
+                Alert.alert('Success', 'Login Success');
+            }
+        } catch (error) {
+            Alert.alert('Error', error.response.data.message);
+        }
+    };
+
+    const clearForm = () => {
+        reset();
+        clearErrors();
+    };
 
     const styles = useMemo(
         () =>
@@ -42,18 +100,17 @@ export const LoginScreen = ({ navigation }) => {
                     marginTop: 20,
                     paddingBottom: 50,
                 },
-                selectInput: {
-                    borderWidth: 1,
-                    borderColor: '#d9d4e7',
-                    borderRadius: 10,
-                    paddingHorizontal: 10,
-                    marginBottom: 20,
-                },
                 customBtn: {
                     backgroundColor: theme.colors.secondary,
                     padding: 10,
                     borderRadius: 10,
                     alignItems: 'center',
+                },
+                formErrorMessage: {
+                    color: theme.colors.error,
+                },
+                containerInputAndError: {
+                    marginBottom: 20,
                 },
             }),
         []
@@ -84,11 +141,49 @@ export const LoginScreen = ({ navigation }) => {
                 />
             </View>
             <View style={styles.containerInput}>
-                <Text>Username</Text>
-                <CustomTextInput autoComplete="username" />
+                <View style={styles.containerInputAndError}>
+                    <Text>Email</Text>
+                    <Controller
+                        name="email"
+                        control={control}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <CustomTextInput
+                                autoComplete="email"
+                                keyboardType="email-address"
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                value={value}
+                                returnKeyType="next"
+                            />
+                        )}
+                    />
+                    {errors.email && (
+                        <Text style={styles.formErrorMessage}>
+                            {errors.email.message}
+                        </Text>
+                    )}
+                </View>
 
-                <Text>Password</Text>
-                <CustomPasswordInput />
+                <View style={styles.containerInputAndError}>
+                    <Text>Password</Text>
+                    <Controller
+                        name="password"
+                        control={control}
+                        render={({ field: { onChange, onBlur, value } }) => (
+                            <CustomPasswordInput
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                value={value}
+                                returnKeyType="next"
+                            />
+                        )}
+                    />
+                    {errors.password && (
+                        <Text style={styles.formErrorMessage}>
+                            {errors.password.message}
+                        </Text>
+                    )}
+                </View>
 
                 <CustomButton
                     title="LOG IN"
@@ -96,6 +191,7 @@ export const LoginScreen = ({ navigation }) => {
                     fontFamily="poppins-semibold"
                     fontSize={18}
                     style={styles.customBtn}
+                    onPress={handleSubmit(onSubmit)}
                 ></CustomButton>
             </View>
         </ScrollView>

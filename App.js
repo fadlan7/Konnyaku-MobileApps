@@ -3,12 +3,9 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AppNavigator from './app/navigation/AppNavigator';
 import ThemeContextProvider from './app/context/ThemeContext';
 import * as Font from 'expo-font';
-import { StatusBar } from 'react-native';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 export default function App() {
     const [fontsLoaded, setFontsLoaded] = useState(false);
-    const queryClient = new QueryClient();
 
     useEffect(() => {
         async function loadFonts() {
@@ -32,9 +29,7 @@ export default function App() {
     return (
         <ThemeContextProvider>
             <SafeAreaProvider>
-                {/* <QueryClientProvider client={queryClient}> */}
-                    <AppNavigator />
-                {/* </QueryClientProvider> */}
+                <AppNavigator />
             </SafeAreaProvider>
         </ThemeContextProvider>
     );

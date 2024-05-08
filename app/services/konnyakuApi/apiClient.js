@@ -1,22 +1,22 @@
 import axios from 'axios';
-import { GlobalError, UnauthorizedError } from '../../utils/error';
+import LocalStorage from '../../utils/LocalStorage';
 
 const axiosInstance = axios.create({
     baseURL: 'http://10.10.102.39:8080',
 });
 
-// axiosInstance.interceptors.request.use(
-//     async (config) => {
-//         const token = await LocalStorage().getData('token');
-//         if (token) {
-//             config.headers['Authorization'] = `Bearer ${token}`;
-//         }
-//         return config;
-//     },
-//     (error) => {
-//         return Promise.reject(error);
-//     }
-// );
+axiosInstance.interceptors.request.use(
+    async (config) => {
+        const token = await LocalStorage().getData('token');
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
+        return config;
+    },
+    (error) => {
+        throw error;
+    }
+);
 
 const apiClient = async ({
     url,
