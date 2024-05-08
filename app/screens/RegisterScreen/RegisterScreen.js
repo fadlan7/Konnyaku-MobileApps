@@ -56,8 +56,8 @@ export const RegisterScreen = ({ navigation }) => {
                 (val) => val !== undefined && val.length > 0,
                 'Street is required'
             ),
-        provincePicker: z.string().nonempty(),
-        cityPicker: z.string().nonempty(),
+        // provincePicker: z.string().nonempty(),
+        // cityPicker: z.string().nonempty(),
     });
 
     const {
@@ -82,18 +82,18 @@ export const RegisterScreen = ({ navigation }) => {
     const [ktpImage, setKtpImage] = useState(null);
     const [selfieImage, setSelfieImage] = useState(null);
     const [ktpValidation, setKtpValidation] = useState(true);
-    const [selfieValidation, setselfieValidation] = useState(true);
+    const [selfieValidation, setSelfieValidation] = useState(true);
     const [permissionGranted, setPermissionGranted] = useState(null);
 
     useEffect(() => {
-        const fetchProvinces = async () => {
-            try {
-                const provinceData = await ongkirService.getProvinces();
-                setProvinces(provinceData.rajaongkir.results);
-            } catch (error) {
-                console.error('Error fetching provinces:', error);
-            }
-        };
+        // const fetchProvinces = async () => {
+        //     try {
+        //         const provinceData = await ongkirService.getProvinces();
+        //         setProvinces(provinceData.rajaongkir.results);
+        //     } catch (error) {
+        //         console.error('Error fetching provinces:', error);
+        //     }
+        // };
 
         const requestPermission = async () => {
             if (Platform.OS !== 'web') {
@@ -104,7 +104,7 @@ export const RegisterScreen = ({ navigation }) => {
         };
 
         requestPermission();
-        fetchProvinces();
+        // fetchProvinces();
     }, []);
 
     const fetchCities = async (provinceId) => {
@@ -142,6 +142,7 @@ export const RegisterScreen = ({ navigation }) => {
 
         if (!camera.canceled) {
             setKtpImage(camera.assets[0]);
+            setKtpValidation(false);
         }
     };
 
@@ -153,8 +154,8 @@ export const RegisterScreen = ({ navigation }) => {
         });
 
         if (!camera.canceled) {
-            console.log(camera);
             setSelfieImage(camera.assets[0]);
+            setSelfieValidation(false);
             // fileName, fileSize, mimeType, path
         }
     };
@@ -165,21 +166,23 @@ export const RegisterScreen = ({ navigation }) => {
 
     const onSubmit = async (data) => {
         try {
-            if (ktpImage === null) {
-                setKtpValidation(false);
-                return;
-            } else if (selfieImage === null) {
-                setselfieValidation(false);
-                return;
+            if (ktpImage === null || selfieImage === null) {
+                setKtpValidation(ktpImage === false);
+                setSelfieValidation(selfieImage === false);
             } else {
                 setKtpValidation(true);
-                setselfieValidation(true);
+                setSelfieValidation(true);
 
                 const selfieImageSize = await getFileInfo(selfieImage.uri);
                 const ktpImageSize = await getFileInfo(ktpImage.uri);
 
                 const { email, password, mobilePhoneNo, name, street } = data;
                 const formData = new FormData();
+
+                // provinceId: selectedProvince.id,
+                // provinceName: selectedProvince.name,
+                // cityId: selectedCity.id,
+                // cityName: selectedCity.name,
 
                 const registrationData = {
                     username: email,
@@ -188,10 +191,10 @@ export const RegisterScreen = ({ navigation }) => {
                     name,
                     addressRequest: {
                         street,
-                        provinceId: selectedProvince.id,
-                        provinceName: selectedProvince.name,
-                        cityId: selectedCity.id,
-                        cityName: selectedCity.name,
+                        provinceId: '12',
+                        provinceName: 'Jawa Barat',
+                        cityId: '99',
+                        cityName: 'Purwakarta',
                     },
                 };
 
@@ -200,32 +203,77 @@ export const RegisterScreen = ({ navigation }) => {
                     JSON.stringify(registrationData)
                 );
 
-                const images = [
-                    {
-                        uri: selfieImage.uri,
-                        type: 'image/jpeg',
-                        name: 'selfie.jpeg',
-                    },
-                    {
-                        uri: ktpImage.uri,
-                        type: 'image/jpeg',
-                        name: 'ktp.jpeg',
-                    },
-                ];
+                formData.append('images',{
+                    uri: selfieImage.uri,
+                    type: 'image/jpeg',
+                    name:`selfie-${name}.jpg`,
+                })
 
-                images.forEach((image) => {
-                    formData.append('images', image);
-                });
-
+                formData.append('images',{
+                    uri: ktpImage.uri,
+                    type: 'image/jpeg',
+                    name:`ktp-${name}.jpg`,
+                })
                 
-                authService.registerMutation.mutate(formData);
-                console.log(formData);
+                // authService.registerMutation.mutate(formData);
+                authService.registerUser(formData)
+
+                // console.log(formData);
             }
         } catch (error) {
             console.error('Error:', error);
             Alert.alert('Error', error.message);
         }
     };
+
+    // const onSubmit = async (data) => {
+    //     try {
+    //         if (!ktpImage) {
+    //             setKtpValidation(false);
+    //             return;
+    //         } else if (!selfieImage) {
+    //             setSelfieValidation(false);
+    //             return;
+    //         } else {
+    //             setKtpValidation(true);
+    //             setSelfieValidation(true);
+
+    //             const { email, password, mobilePhoneNo, name, street } = data;
+
+    //             const formData = new FormData();
+    //             const registrationData = {
+    //                 username: email,
+    //                 password,
+    //                 mobilePhoneNo,
+    //                 name,
+    //                 addressRequest: {
+    //                     street,
+    //                     provinceId: '12',
+    //                     provinceName: 'Jabar',
+    //                     cityId: '1',
+    //                     cityName: 'Bdng',
+    //                 },
+    //             };
+
+    //             formData.append('registration', JSON.stringify(registrationData));
+    //             formData.append('selfieImage', {
+    //                 uri: selfieImage.uri,
+    //                 type: 'image/jpeg',
+    //                 name: 'selfie.jpeg',
+    //             });
+    //             formData.append('ktpImage', {
+    //                 uri: ktpImage.uri,
+    //                 type: 'image/jpeg',
+    //                 name: 'ktp.jpeg',
+    //             });
+
+    //             await authService.registerMutation.mutate(formData);
+    //         }
+    //     } catch (error) {
+    //         console.error('Error:', error);
+    //         Alert.alert('Error', error.message);
+    //     }
+    // };
 
     const styles = useMemo(
         () =>
@@ -416,7 +464,7 @@ export const RegisterScreen = ({ navigation }) => {
                             )}
                         </View>
 
-                        <View style={styles.containerInputAndError}>
+                        {/* <View style={styles.containerInputAndError}>
                             <Text>Province</Text>
                             <Controller
                                 control={control}
@@ -515,7 +563,7 @@ export const RegisterScreen = ({ navigation }) => {
                                     </Text>
                                 )}
                             </View>
-                        )}
+                        )} */}
 
                         <View style={styles.containerInputAndError}>
                             <Text>Street</Text>
@@ -563,10 +611,12 @@ export const RegisterScreen = ({ navigation }) => {
                                 imageUri={selfieImage?.uri}
                                 onPress={handleTakeSelfie}
                             />
-                            {ktpValidation === false && (
+                            {selfieValidation === false ? (
                                 <Text style={styles.formErrorMessage}>
                                     please take a picture
                                 </Text>
+                            ) : (
+                                <></>
                             )}
                         </View>
 

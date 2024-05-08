@@ -5,7 +5,6 @@ const axiosInstance = axios.create({
     baseURL: 'http://10.10.102.39:8080',
 });
 
-
 // axiosInstance.interceptors.request.use(
 //     async (config) => {
 //         const token = await LocalStorage().getData('token');
@@ -19,25 +18,36 @@ const axiosInstance = axios.create({
 //     }
 // );
 
-
-const apiClient = async ({ url, method, body = null, params = null }) => {
+const apiClient = async ({
+    url,
+    method,
+    data = null,
+    params = null,
+    multipart = false,
+}) => {
     try {
         let result;
 
         if (method === 'put' || method === 'post') {
-            result = await axiosInstance[method](url, body);
+            if (multipart && data instanceof FormData) {
+                result = await axiosInstance[method](url, data, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                });
+            } else {
+                result = await axiosInstance[method](url, data, { params });
+            }
         } else {
             result = await axiosInstance[method](url, { params });
         }
+
         return result;
     } catch (error) {
-        if (error.response && error.response.status === 401) {
-            throw new UnauthorizedError('Unauthorized');
-        } else if (error.response && error.response.data && error.response.data.message) {
-            throw new GlobalError(error.response.data.message);
-        } else {
-            throw new Error(`Unknown error occurred: ${error.message}`);
-        }
+        throw new Error(
+            error.response.data.message ||
+                'Terjadi kesalahan saat melakukan permintaan'
+        );
     }
 };
 

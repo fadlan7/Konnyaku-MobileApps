@@ -32,9 +32,9 @@ export default function App() {
     return (
         <ThemeContextProvider>
             <SafeAreaProvider>
-                <QueryClientProvider client={queryClient}>
+                {/* <QueryClientProvider client={queryClient}> */}
                     <AppNavigator />
-                </QueryClientProvider>
+                {/* </QueryClientProvider> */}
             </SafeAreaProvider>
         </ThemeContextProvider>
     );
