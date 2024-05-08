@@ -44,10 +44,7 @@ const apiClient = async ({
 
         return result;
     } catch (error) {
-        throw new Error(
-            error.response.data.message ||
-                'Terjadi kesalahan saat melakukan permintaan'
-        );
+        throw error;
     }
 };
 

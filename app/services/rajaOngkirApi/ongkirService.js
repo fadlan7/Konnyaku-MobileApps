@@ -16,7 +16,6 @@ const OngkirService = () => {
             const { data } = await ongkirClient.get('/province');
             return data;
         } catch (error) {
-            console.error('Error fetching provinces:', error);
             throw error;
         }
     };
@@ -30,7 +29,6 @@ const OngkirService = () => {
             });
             return data;
         } catch (error) {
-            console.error('Error fetching cities:', error);
             throw error;
         }
     };

@@ -21,6 +21,7 @@ import * as z from 'zod';
 import AuthService from '../../services/konnyakuApi/AuthService';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as FileSystem from 'expo-file-system';
+import { Alert } from 'react-native';
 
 export const RegisterScreen = ({ navigation }) => {
     const schema = z.object({
@@ -137,12 +138,12 @@ export const RegisterScreen = ({ navigation }) => {
         const camera = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            quality: 0.1,
+            quality: 0.5,
         });
 
         if (!camera.canceled) {
             setKtpImage(camera.assets[0]);
-            setKtpValidation(false);
+            setKtpValidation(true);
         }
     };
 
@@ -150,31 +151,25 @@ export const RegisterScreen = ({ navigation }) => {
         const camera = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            quality: 0.1,
+            quality: 0.5,
         });
 
         if (!camera.canceled) {
             setSelfieImage(camera.assets[0]);
-            setSelfieValidation(false);
+            setSelfieValidation(true);
             // fileName, fileSize, mimeType, path
         }
-    };
-    const getFileInfo = async (fileUri) => {
-        const fileInfo = await FileSystem.getInfoAsync(fileUri);
-        return fileInfo.size;
     };
 
     const onSubmit = async (data) => {
         try {
-            if (ktpImage === null || selfieImage === null) {
-                setKtpValidation(ktpImage === false);
-                setSelfieValidation(selfieImage === false);
+            if (ktpImage === null) {
+                setKtpValidation(false);
+            } else if (selfieImage === null) {
+                setSelfieValidation(false);
             } else {
                 setKtpValidation(true);
                 setSelfieValidation(true);
-
-                const selfieImageSize = await getFileInfo(selfieImage.uri);
-                const ktpImageSize = await getFileInfo(ktpImage.uri);
 
                 const { email, password, mobilePhoneNo, name, street } = data;
                 const formData = new FormData();
@@ -203,26 +198,23 @@ export const RegisterScreen = ({ navigation }) => {
                     JSON.stringify(registrationData)
                 );
 
-                formData.append('images',{
+                formData.append('images', {
                     uri: selfieImage.uri,
                     type: 'image/jpeg',
-                    name:`selfie-${name}.jpg`,
-                })
+                    name: `selfie-${email}.jpg`,
+                });
 
-                formData.append('images',{
+                formData.append('images', {
                     uri: ktpImage.uri,
                     type: 'image/jpeg',
-                    name:`ktp-${name}.jpg`,
-                })
-                
-                // authService.registerMutation.mutate(formData);
-                authService.registerUser(formData)
+                    name: `ktp-${email}.jpg`,
+                });
 
-                // console.log(formData);
+                // authService.registerMutation.mutate(formData);
+                await authService.registerUser(formData);
             }
         } catch (error) {
-            console.error('Error:', error);
-            Alert.alert('Error', error.message);
+            Alert.alert('Error', error.response.data.message);
         }
     };
 
