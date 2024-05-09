@@ -7,6 +7,7 @@ import {
     View,
     TouchableOpacity,
     Image,
+    Dimensions,
 } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import CustomTextInput from '../../shared/components/CustomTextInput';
@@ -14,7 +15,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { currencyFormat } from '../../utils/currencyFormat';
 import { ImageBackground } from 'react-native';
 import AuthService from '../../services/konnyakuApi/AuthService';
-import LocalStorage from '../../utils/LocalStorage';
 
 export const HomeScreen = ({ navigation }) => {
     const { theme } = useTheme();
@@ -299,7 +299,8 @@ export const HomeScreen = ({ navigation }) => {
                 position: 'absolute',
                 top: 10,
                 right: 10,
-                backgroundColor: theme.colors.secondary,
+                backgroundColor: theme.colors.primary,
+                elevation: 5,
                 paddingHorizontal: 5,
                 paddingVertical: 5,
                 borderRadius: 50,
@@ -330,9 +331,11 @@ export const HomeScreen = ({ navigation }) => {
         }, 2000);
     }, []);
 
+    const { width, height } = Dimensions.get('window');
+
     return (
         <View style={styles.container}>
-            <View>
+            <View style={{ paddingVertical: 10 }}>
                 <CustomTextInput
                     preIcon={
                         <Ionicons
@@ -345,7 +348,8 @@ export const HomeScreen = ({ navigation }) => {
             </View>
             <View>
                 <FlatList
-                    contentContainerStyle={{ paddingBottom: 24 }}
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={{ paddingBottom: 70 }}
                     columnWrapperStyle={{ justifyContent: 'space-between' }}
                     refreshControl={
                         <RefreshControl
@@ -382,7 +386,10 @@ export const HomeScreen = ({ navigation }) => {
                                     </ImageBackground>
                                 </View>
                                 <View>
-                                    <Text style={styles.prdName}>
+                                    <Text
+                                        numberOfLines={1}
+                                        style={styles.prdName}
+                                    >
                                         {item.name}
                                     </Text>
                                     <Text style={styles.prdPrice}>
@@ -393,7 +400,7 @@ export const HomeScreen = ({ navigation }) => {
                                         <Ionicons
                                             name="storefront"
                                             size={16}
-                                            color={theme.colors.secondary}
+                                            color={theme.colors.primary}
                                         />
                                         <Text style={styles.vendorName}>
                                             {item.vendorName}

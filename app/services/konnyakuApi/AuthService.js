@@ -31,13 +31,14 @@ const AuthService = () => {
         const token = await LocalStorage().getData('token');
 
         if (token) {
-            await apiClient({
+            const { data } = await apiClient({
                 url: '/api/auth/validate-token',
                 method: 'get',
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
+            return data;
         } else {
             throw new Error('Token not found');
         }

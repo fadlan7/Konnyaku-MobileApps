@@ -14,6 +14,7 @@ import { HistoryScreen } from '../screens/TransactionHistoryScreen/HistoryScreen
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
 import { ProductDetailScreen } from '../screens/ProductDetailScreen/ProductDetailScreen';
+import { ProfileScreen } from '../screens/ProfileScreen/ProfileScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -30,6 +31,9 @@ function getTabBarIcon(routeName, { color, focused, size }) {
         case 'History':
             name = focused ? 'list' : 'list-outline';
             break;
+        case 'Profile':
+            name = focused ? 'person' : 'person-outline';
+            break;
     }
     return <Ionicons name={name} size={size} color={color} />;
 }
@@ -38,11 +42,12 @@ function TabNavigation() {
     const { theme } = useTheme();
     return (
         <Tab.Navigator
+        initialRouteName='Favorite'
             screenOptions={({ route }) => {
                 return {
                     headerShown: false,
-                    tabBarActiveTintColor: theme.colors.secondary,
-                    tabBarInactiveTintColor: theme.colors.secondary,
+                    tabBarActiveTintColor: theme.colors.primary,
+                    tabBarInactiveTintColor: theme.colors.primary,
                     tabBarIcon: (opt) => getTabBarIcon(route.name, opt),
                 };
             }}
@@ -50,6 +55,7 @@ function TabNavigation() {
             <Tab.Screen name="Home" component={HomeScreen} />
             <Tab.Screen name="Favorite" component={FavoriteScreen} />
             <Tab.Screen name="History" component={HistoryScreen} />
+            <Tab.Screen name="Profile" component={ProfileScreen} />
         </Tab.Navigator>
     );
 }
@@ -57,10 +63,10 @@ function TabNavigation() {
 function StackNavigation() {
     return (
         <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="Splash" component={SplashScreen} />
+            {/* <Stack.Screen name="Splash" component={SplashScreen} />
             <Stack.Screen name="Onboarding" component={OnboardingScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} /> */}
             <Stack.Screen name="TabHome" component={TabNavigation} />
             <Stack.Screen
                 name="ProductDetail"

@@ -254,7 +254,7 @@ export const RegisterScreen = ({ navigation }) => {
                 },
                 loginTxt: {
                     fontFamily: 'poppins-semibold',
-                    color: theme.colors.secondary,
+                    color: theme.colors.primary,
                 },
                 containerInput: {
                     marginTop: 20,
@@ -268,7 +268,7 @@ export const RegisterScreen = ({ navigation }) => {
                     marginTop: 5,
                 },
                 customBtn: {
-                    backgroundColor: theme.colors.secondary,
+                    backgroundColor: theme.colors.primary,
                     padding: 10,
                     borderRadius: 10,
                     alignItems: 'center',
