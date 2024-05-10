@@ -336,6 +336,30 @@ export const FavoriteScreen = ({ navigation }) => {
                 ItemSeparatorComponent={
                     <View style={styles.horizontalSeparator} />
                 }
+                ListEmptyComponent={
+                    !dummyData.length && (
+                        <View
+                            style={{
+                                flex: 1,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                height: height-50
+                            }}
+                        >
+                            <Image
+                                style={{
+                                    width: width,
+                                    height: width,
+                                }}
+                                source={require('../../shared/assets/images/login.png')}
+                                resizeMode="contain"
+                            />
+                            <Text style={{ fontFamily: 'poppins-semibold' }}>
+                                Doesn't have a favorite product
+                            </Text>
+                        </View>
+                    )
+                }
                 showsVerticalScrollIndicator={false}
                 refreshControl={
                     <RefreshControl

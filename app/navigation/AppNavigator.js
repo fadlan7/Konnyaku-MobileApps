@@ -15,6 +15,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../context/ThemeContext';
 import { ProductDetailScreen } from '../screens/ProductDetailScreen/ProductDetailScreen';
 import { ProfileScreen } from '../screens/ProfileScreen/ProfileScreen';
+import { ShopRegistrationScreen } from '../screens/ShopRegistrationScreen/ShopRegistrationScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -42,7 +43,7 @@ function TabNavigation() {
     const { theme } = useTheme();
     return (
         <Tab.Navigator
-        initialRouteName='Favorite'
+            // initialRouteName="Favorite"
             screenOptions={({ route }) => {
                 return {
                     headerShown: false,
@@ -62,15 +63,22 @@ function TabNavigation() {
 
 function StackNavigation() {
     return (
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-            {/* <Stack.Screen name="Splash" component={SplashScreen} />
+        <Stack.Navigator
+            screenOptions={{ headerShown: false }}
+            // initialRouteName="ShopRegistration"
+        >
+            <Stack.Screen name="Splash" component={SplashScreen} />
             <Stack.Screen name="Onboarding" component={OnboardingScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} /> */}
+            <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="TabHome" component={TabNavigation} />
             <Stack.Screen
                 name="ProductDetail"
                 component={ProductDetailScreen}
+            />
+            <Stack.Screen
+                name="ShopRegistration"
+                component={ShopRegistrationScreen}
             />
         </Stack.Navigator>
     );

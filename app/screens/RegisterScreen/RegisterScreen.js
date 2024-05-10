@@ -61,8 +61,8 @@ export const RegisterScreen = ({ navigation }) => {
                 (val) => val !== undefined && val.length > 0,
                 'Street is required'
             ),
-        // provincePicker: z.string().nonempty(),
-        // cityPicker: z.string().nonempty(),
+        provincePicker: z.string().nonempty(),
+        cityPicker: z.string().nonempty(),
     });
 
     const {
@@ -91,14 +91,14 @@ export const RegisterScreen = ({ navigation }) => {
     const [permissionGranted, setPermissionGranted] = useState(null);
 
     useEffect(() => {
-        // const fetchProvinces = async () => {
-        //     try {
-        //         const provinceData = await ongkirService.getProvinces();
-        //         setProvinces(provinceData.rajaongkir.results);
-        //     } catch (error) {
-        //         console.error('Error fetching provinces:', error);
-        //     }
-        // };
+        const fetchProvinces = async () => {
+            try {
+                const provinceData = await ongkirService.getProvinces();
+                setProvinces(provinceData.rajaongkir.results);
+            } catch (error) {
+                Alert.alert('Error fetching provinces:', error);
+            }
+        };
 
         const requestPermission = async () => {
             if (Platform.OS !== 'web') {
@@ -109,7 +109,7 @@ export const RegisterScreen = ({ navigation }) => {
         };
 
         requestPermission();
-        // fetchProvinces();
+        fetchProvinces();
     }, []);
 
     const fetchCities = async (provinceId) => {
@@ -161,7 +161,6 @@ export const RegisterScreen = ({ navigation }) => {
         if (!camera.canceled) {
             setSelfieImage(camera.assets[0]);
             setSelfieValidation(true);
-            // fileName, fileSize, mimeType, path
         }
     };
 
@@ -178,11 +177,6 @@ export const RegisterScreen = ({ navigation }) => {
                 const { email, password, mobilePhoneNo, name, street } = data;
                 const formData = new FormData();
 
-                // provinceId: selectedProvince.id,
-                // provinceName: selectedProvince.name,
-                // cityId: selectedCity.id,
-                // cityName: selectedCity.name,
-
                 const registrationData = {
                     username: email,
                     password,
@@ -190,10 +184,10 @@ export const RegisterScreen = ({ navigation }) => {
                     name,
                     addressRequest: {
                         street,
-                        provinceId: '12',
-                        provinceName: 'Jawa Barat',
-                        cityId: '99',
-                        cityName: 'Purwakarta',
+                        provinceId: selectedProvince.id,
+                        provinceName: selectedProvince.name,
+                        cityId: selectedCity.id,
+                        cityName: selectedCity.name,
                     },
                 };
 
@@ -216,11 +210,10 @@ export const RegisterScreen = ({ navigation }) => {
 
                 const response = await authService.registerUser(formData);
 
-
                 if (response.data.statusCode === 201) {
                     clearForm();
                     navigation.replace('Login');
-                    Alert.alert('Success', 'Registration Success')
+                    Alert.alert('Success', 'Registration Success');
                 }
             }
         } catch (error) {
@@ -229,8 +222,8 @@ export const RegisterScreen = ({ navigation }) => {
     };
 
     const clearForm = () => {
-        setKtpImage(null)
-        setSelfieImage(null)
+        setKtpImage(null);
+        setSelfieImage(null);
         reset();
         clearErrors();
     };
@@ -424,7 +417,7 @@ export const RegisterScreen = ({ navigation }) => {
                             )}
                         </View>
 
-                        {/* <View style={styles.containerInputAndError}>
+                        <View style={styles.containerInputAndError}>
                             <Text>Province</Text>
                             <Controller
                                 control={control}
@@ -523,7 +516,7 @@ export const RegisterScreen = ({ navigation }) => {
                                     </Text>
                                 )}
                             </View>
-                        )} */}
+                        )}
 
                         <View style={styles.containerInputAndError}>
                             <Text>Street</Text>

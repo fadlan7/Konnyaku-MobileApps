@@ -17,7 +17,7 @@ export const ProfileScreen = ({ navigation }) => {
                 text: 'Logout',
                 onPress: async () => {
                     authService.logout();
-                    navigation.replace('Login');
+                    navigation.replace('Onboarding');
                 },
             },
         ]);
@@ -30,6 +30,18 @@ export const ProfileScreen = ({ navigation }) => {
                 backgroundColor: theme.colors.background,
                 padding: 15,
             },
+            btnContainer: {
+                flexDirection: 'row',
+                alignItems: 'center',
+                paddingHorizontal: 12,
+                marginVertical: 8,
+            },
+            iconContainer: {
+                flex: 1,
+                flexDirection: 'row',
+                gap: 8,
+                alignItems: 'center',
+            },
         })
     );
 
@@ -37,23 +49,22 @@ export const ProfileScreen = ({ navigation }) => {
         <View style={styles.container}>
             <TouchableOpacity
                 onPress={handleLogout}
-                style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    paddingHorizontal: 12,
-                    marginVertical: 8,
-                }}
+                style={styles.btnContainer}
             >
-                <View
-                    style={{
-                        flex: 1,
-                        flexDirection: 'row',
-                        gap: 8,
-                        alignItems: 'center',
-                    }}
-                >
+                <View style={styles.iconContainer}>
                     <Ionicons name="exit-outline" size={24} />
                     <Text>Logout</Text>
+                </View>
+                <Ionicons name="chevron-forward" size={18} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={() => navigation.navigate('ShopRegistration')}
+                style={styles.btnContainer}
+            >
+                <View style={styles.iconContainer}>
+                    <Ionicons name="storefront-outline" size={24} />
+                    <Text>New Shop</Text>
                 </View>
                 <Ionicons name="chevron-forward" size={18} />
             </TouchableOpacity>
