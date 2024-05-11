@@ -67,8 +67,8 @@ function StackNavigation() {
             screenOptions={{ headerShown: false }}
             // initialRouteName="ShopRegistration"
         >
-            <Stack.Screen name="Splash" component={SplashScreen} />
-            <Stack.Screen name="Onboarding" component={OnboardingScreen} />
+            {/* <Stack.Screen name="Splash" component={SplashScreen} />
+            <Stack.Screen name="Onboarding" component={OnboardingScreen} /> */}
             <Stack.Screen name="Register" component={RegisterScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="TabHome" component={TabNavigation} />

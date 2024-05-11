@@ -21,6 +21,8 @@ import * as z from 'zod';
 import AuthService from '../../services/konnyakuApi/AuthService';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Alert } from 'react-native';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import { TermAndConditionModal } from './components/TermAndConditionModal';
 
 export const RegisterScreen = ({ navigation }) => {
     const schema = z.object({
@@ -89,6 +91,21 @@ export const RegisterScreen = ({ navigation }) => {
     const [ktpValidation, setKtpValidation] = useState(true);
     const [selfieValidation, setSelfieValidation] = useState(true);
     const [permissionGranted, setPermissionGranted] = useState(null);
+    const [isTCChecked, setIsTCChecked] = useState(null);
+    const [isTCOpen, setIsTCOpen] = useState(false);
+
+    const handleToggleTC = () => {
+        setIsTCOpen(!isTCOpen);
+    };
+
+    const handleTCOk = () => {
+        setIsTCChecked(true);
+        setIsTCOpen(false);
+    };
+
+    const handleCloseTC = () => {
+        setIsTCOpen(false);
+    };
 
     useEffect(() => {
         const fetchProvinces = async () => {
@@ -170,6 +187,8 @@ export const RegisterScreen = ({ navigation }) => {
                 setKtpValidation(false);
             } else if (selfieImage === null) {
                 setSelfieValidation(false);
+            } else if (isTCChecked === null) {
+                setIsTCChecked(false);
             } else {
                 setKtpValidation(true);
                 setSelfieValidation(true);
@@ -271,6 +290,14 @@ export const RegisterScreen = ({ navigation }) => {
                 },
                 containerInputAndError: {
                     marginBottom: 20,
+                },
+                checkboxContainer: {
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    width: '80%',
+                },
+                checkboxText: {
+                    fontFamily: 'poppins-regular',
                 },
             }),
         []
@@ -572,6 +599,43 @@ export const RegisterScreen = ({ navigation }) => {
                                 <></>
                             )}
                         </View>
+
+                        <View style={styles.containerInputAndError}>
+                            <View style={styles.checkboxContainer}>
+                                <BouncyCheckbox
+                                    isChecked={isTCChecked}
+                                    onPress={() => setIsTCChecked(!isTCChecked)}
+                                    disabled={!isTCOpen}
+                                    fillColor={theme.colors.primary}
+                                />
+                                <Text style={styles.checkboxText}>
+                                    I have read and agree{' '}
+                                    <Text
+                                        style={[
+                                            styles.checkboxText,
+                                            { color: theme.colors.primary },
+                                        ]}
+                                        numberOfLines={2}
+                                        onPress={handleToggleTC}
+                                    >
+                                        Terms and Conditions
+                                    </Text>
+                                </Text>
+                            </View>
+                            {isTCChecked === false ? (
+                                <Text style={styles.formErrorMessage}>
+                                    You must agree to the terms and conditions
+                                </Text>
+                            ) : (
+                                <></>
+                            )}
+                        </View>
+
+                        <TermAndConditionModal
+                            isVisible={isTCOpen}
+                            onClose={handleCloseTC}
+                            onAccept={handleTCOk}
+                        />
 
                         <CustomButton
                             title="REGISTER"
