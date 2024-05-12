@@ -48,23 +48,23 @@ export const ProfileScreen = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <TouchableOpacity
-                onPress={handleLogout}
-                style={styles.btnContainer}
-            >
-                <View style={styles.iconContainer}>
-                    <Ionicons name="exit-outline" size={24} />
-                    <Text>Logout</Text>
-                </View>
-                <Ionicons name="chevron-forward" size={18} />
-            </TouchableOpacity>
-
-            <TouchableOpacity
                 onPress={() => navigation.navigate('ShopRegistration')}
                 style={styles.btnContainer}
             >
                 <View style={styles.iconContainer}>
                     <Ionicons name="storefront-outline" size={24} />
                     <Text>New Shop</Text>
+                </View>
+                <Ionicons name="chevron-forward" size={18} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+                onPress={handleLogout}
+                style={styles.btnContainer}
+            >
+                <View style={styles.iconContainer}>
+                    <Ionicons name="exit-outline" size={24} />
+                    <Text>Logout</Text>
                 </View>
                 <Ionicons name="chevron-forward" size={18} />
             </TouchableOpacity>

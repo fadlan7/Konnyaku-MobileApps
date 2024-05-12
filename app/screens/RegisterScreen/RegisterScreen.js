@@ -137,7 +137,7 @@ export const RegisterScreen = ({ navigation }) => {
             setCities(cityData.rajaongkir.results);
             setSelectedCity({ id: '', name: '' });
         } catch (error) {
-            console.error('Error fetching cities:', error);
+            Alert.alert('Error fetching cities:', error);
         }
     };
 

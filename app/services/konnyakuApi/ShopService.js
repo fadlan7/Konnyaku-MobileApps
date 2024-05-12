@@ -13,7 +13,6 @@ const ShopService = () => {
             return response;
         } catch (error) {
             throw error;
-            console.log('pesanerrer' + error);
         }
     };
 
