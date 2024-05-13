@@ -13,10 +13,13 @@ import { useTheme } from '../../context/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import Lightbox from 'react-native-lightbox-v2';
 import RenderHTML from 'react-native-render-html';
+import { currencyFormat } from '../../utils/currencyFormat';
+import CustomButton from '../../shared/components/CustomButton';
 
 export const ProductDetailScreen = ({ route, navigation }) => {
     const { theme } = useTheme();
-    const { id, name, price, description, images, vendorName } = route.params;
+    const { name, description, priceAmount, weight, details, images } =
+        route.params;
     const { width, height } = Dimensions.get('window');
     const [activeIndex, setActiveIndex] = useState(0);
     const IMAGE_SIZE = 80;
@@ -47,6 +50,13 @@ export const ProductDetailScreen = ({ route, navigation }) => {
         }
     };
 
+    const HtmlRenderStyle = {
+        p: {
+            fontFamily: 'poppins-bold',
+            fontSize: 16,
+        },
+    };
+
     const styles = useMemo(() =>
         StyleSheet.create({
             container: {
@@ -58,7 +68,6 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                 justifyContent: 'space-between',
                 paddingHorizontal: 12,
                 paddingVertical: 8,
-                borderWidth: 1,
             },
             backButton: {
                 flexDirection: 'row',
@@ -83,13 +92,21 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                 shadowOffset: { width: 0, height: 1 },
                 shadowOpacity: 1,
                 elevation: 5,
+                alignSelf: 'center',
             },
             imgThumbnail: {
                 width: IMAGE_SIZE,
                 height: IMAGE_SIZE,
                 borderRadius: 12,
                 marginRight: 10,
-                borderWidth: 2,
+                borderWidth: 1,
+                borderColor: theme.colors.secondary,
+            },
+            customBtn: {
+                backgroundColor: theme.colors.primary,
+                padding: 10,
+                borderRadius: 20,
+                alignItems: 'center',
             },
         })
     );
@@ -117,14 +134,50 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                     </TouchableOpacity>
                 </View>
             </View>
-
+            <View
+                style={{
+                    width: '100%',
+                    height: 60,
+                    elevation: 1,
+                    paddingHorizontal: 20,
+                    backgroundColor: theme.colors.background,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    position: 'absolute',
+                    borderWidth: 0.5,
+                    borderColor: theme.colors.primary,
+                    borderTopStartRadius: 10,
+                    borderTopEndRadius: 10,
+                    bottom: 0,
+                    zIndex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                }}
+            >
+                <View>
+                    <Text style={{ fontFamily: 'poppins-light' }}>
+                        Total price
+                    </Text>
+                    <Text style={{ fontFamily: 'poppins-semibold' }}>
+                        {currencyFormat(priceAmount)}
+                    </Text>
+                </View>
+                <CustomButton
+                    title="Check out"
+                    color="#fff"
+                    fontFamily="poppins-semibold"
+                    fontSize={14}
+                    style={styles.customBtn}
+                    // onPress={handleSubmit(onSubmit)}
+                />
+            </View>
             <FlatList
                 showsVerticalScrollIndicator={false}
                 ListHeaderComponent={
-                    <View style={{ borderWidth: 2 }}>
+                    <View>
                         <FlatList
                             ref={topRef}
-                            data={images}
+                            data={details}
                             keyExtractor={(item) => item.id}
                             horizontal
                             showsHorizontalScrollIndicator={false}
@@ -137,20 +190,59 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                             }}
                             renderItem={({ item }) => {
                                 return (
-                                    <Lightbox>
-                                        <View style={styles.containerPrdImage}>
-                                            <Image
-                                                source={{ uri: item.url }}
-                                                style={styles.prdImage}
+                                    <View>
+                                        <Lightbox
+                                            style={{
+                                                borderBottomWidth: 0.5,
+                                                borderBlockColor:
+                                                    theme.colors.primary,
+                                            }}
+                                        >
+                                            <View
+                                                style={styles.containerPrdImage}
+                                            >
+                                                <Image
+                                                    source={{
+                                                        uri: `http://10.10.102.39:8080${item.image.url}`,
+                                                    }}
+                                                    style={styles.prdImage}
+                                                />
+                                            </View>
+                                        </Lightbox>
+                                        <View style={{ paddingHorizontal: 20 }}>
+                                            <Text
+                                                style={{
+                                                    fontFamily:
+                                                        'poppins-semibold',
+                                                    fontSize: 20,
+                                                }}
+                                            >
+                                                {item.name}
+                                            </Text>
+                                            <Text
+                                                style={{
+                                                    fontFamily: 'poppins-bold',
+                                                    fontSize: 18,
+                                                    marginBottom: -10,
+                                                }}
+                                            >
+                                                {item.price}
+                                            </Text>
+                                            <RenderHTML
+                                                contentWidth={width}
+                                                source={{
+                                                    html: `${item.description}`,
+                                                }}
+                                                tagsStyles={HtmlRenderStyle}
                                             />
                                         </View>
-                                    </Lightbox>
+                                    </View>
                                 );
                             }}
                         />
                         <FlatList
                             ref={thumbRef}
-                            data={images}
+                            data={details}
                             keyExtractor={(item) => item.id}
                             horizontal
                             showsHorizontalScrollIndicator={false}
@@ -166,7 +258,9 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                                         }
                                     >
                                         <Image
-                                            source={{ uri: item.url }}
+                                            source={{
+                                                uri: `http://10.10.102.39:8080${item.image.url}`,
+                                            }}
                                             style={[
                                                 styles.imgThumbnail,
                                                 {
@@ -188,10 +282,17 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                         <View
                             style={{
                                 paddingHorizontal: 20,
-                                marginTop: 20,
-                                backgroundColor: 'yellow',
+                                paddingBottom: 80,
                             }}
                         >
+                            <View
+                                style={{
+                                    width: '100%',
+                                    borderBottomWidth: 1,
+                                    borderBottomColor: theme.colors.primary,
+                                    marginBottom: 10,
+                                }}
+                            />
                             <Text
                                 style={{
                                     fontSize: 18,
@@ -204,61 +305,22 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                             <Text
                                 style={{
                                     fontSize: 18,
-                                    fontFamily: 'poppins-semibold',
+                                    fontFamily: 'poppins-regular',
                                     color: theme.colors.text,
-                                    marginTop: 20,
+                                    marginTop: 10,
+                                    marginBottom: -10,
                                 }}
                             >
                                 Product Details
                             </Text>
-                            <Text>{description}</Text>
-                            <Text>{vendorName}</Text>
+                            <RenderHTML
+                                contentWidth={width}
+                                source={{
+                                    html: `${description}`,
+                                }}
+                                tagsStyles={HtmlRenderStyle}
+                            />
                         </View>
-                        <RenderHTML
-                            contentWidth={width}
-                            source={{
-                                html: `<h1>Nama Produk</h1>
-                                <p>Deskripsi singkat tentang produk ini akan memberikan gambaran kepada pelanggan tentang fitur, manfaat, dan nilai yang ditawarkan oleh produk.</p>
-                                
-                                <h2>Fitur Utama:</h2>
-                                <ul>
-                                    <li>Fitur 1: Deskripsi singkat tentang fitur 1.</li>
-                                    <li>Fitur 2: Deskripsi singkat tentang fitur 2.</li>
-                                    <li>Fitur 3: Deskripsi singkat tentang fitur 3.</li>
-                                </ul>
-                                
-                                <h2>Manfaat:</h2>
-                                <p>Produk ini akan membantu pelanggan dalam hal-hal berikut:</p>
-                                <ul>
-                                    <li>Manfaat 1: Deskripsi singkat tentang manfaat 1.</li>
-                                    <li>Manfaat 2: Deskripsi singkat tentang manfaat 2.</li>
-                                    <li>Manfaat 3: Deskripsi singkat tentang manfaat 3.</li>
-                                </ul>
-                                
-                                <h2>Spesifikasi Teknis:</h2>
-                                <table>
-                                    <tr>
-                                        <th>Spesifikasi</th>
-                                        <th>Detail</th>
-                                    </tr>
-                                    <tr>
-                                        <td>Spesifikasi 1</td>
-                                        <td>Detail spesifikasi 1</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Spesifikasi 2</td>
-                                        <td>Detail spesifikasi 2</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Spesifikasi 3</td>
-                                        <td>Detail spesifikasi 3</td>
-                                    </tr>
-                                </table>
-                                
-                                <p>Harga: <strong>RpXXX,XXX</strong></p>
-                                <p>Untuk informasi lebih lanjut atau pembelian, silakan <a href="kontak.html">hubungi kami</a>.</p>`,
-                            }}
-                        />
                     </>
                 }
             />

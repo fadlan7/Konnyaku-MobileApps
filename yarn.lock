@@ -548,7 +548,7 @@
     "@babel/helper-create-regexp-features-plugin" "^7.18.6"
     "@babel/helper-plugin-utils" "^7.18.6"
 
-"@babel/plugin-transform-arrow-functions@^7.0.0", "@babel/plugin-transform-arrow-functions@^7.24.1":
+"@babel/plugin-transform-arrow-functions@^7.0.0", "@babel/plugin-transform-arrow-functions@^7.0.0-0", "@babel/plugin-transform-arrow-functions@^7.24.1":
   version "7.24.1"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-arrow-functions/-/plugin-transform-arrow-functions-7.24.1.tgz#2bf263617060c9cc45bcdbf492b8cc805082bf27"
   integrity sha512-ngT/3NkRhsaep9ck9uj2Xhv9+xB1zShY3tM3g6om4xxCELwCDN4g4Aq5dRn48+0hasAql7s2hdBOysCfNpr4fw==
@@ -778,7 +778,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.24.0"
 
-"@babel/plugin-transform-nullish-coalescing-operator@^7.24.1":
+"@babel/plugin-transform-nullish-coalescing-operator@^7.0.0-0", "@babel/plugin-transform-nullish-coalescing-operator@^7.24.1":
   version "7.24.1"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-nullish-coalescing-operator/-/plugin-transform-nullish-coalescing-operator-7.24.1.tgz#0cd494bb97cb07d428bd651632cb9d4140513988"
   integrity sha512-iQ+caew8wRrhCikO5DrUYx0mrmdhkaELgFa+7baMcVuhxIkN7oxt06CZ51D65ugIb1UWRQ8oQe+HXAVM6qHFjw==
@@ -820,7 +820,7 @@
     "@babel/helper-plugin-utils" "^7.24.0"
     "@babel/plugin-syntax-optional-catch-binding" "^7.8.3"
 
-"@babel/plugin-transform-optional-chaining@^7.24.1", "@babel/plugin-transform-optional-chaining@^7.24.5":
+"@babel/plugin-transform-optional-chaining@^7.0.0-0", "@babel/plugin-transform-optional-chaining@^7.24.1", "@babel/plugin-transform-optional-chaining@^7.24.5":
   version "7.24.5"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-optional-chaining/-/plugin-transform-optional-chaining-7.24.5.tgz#a6334bebd7f9dd3df37447880d0bd64b778e600f"
   integrity sha512-xWCkmwKT+ihmA6l7SSTpk8e4qQl/274iNbSKRRS8mpqFR32ksy36+a+LWY8OXCCEefF8WFlnOHVsaDI2231wBg==
@@ -935,7 +935,7 @@
     babel-plugin-polyfill-regenerator "^0.6.1"
     semver "^6.3.1"
 
-"@babel/plugin-transform-shorthand-properties@^7.0.0", "@babel/plugin-transform-shorthand-properties@^7.24.1":
+"@babel/plugin-transform-shorthand-properties@^7.0.0", "@babel/plugin-transform-shorthand-properties@^7.0.0-0", "@babel/plugin-transform-shorthand-properties@^7.24.1":
   version "7.24.1"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-shorthand-properties/-/plugin-transform-shorthand-properties-7.24.1.tgz#ba9a09144cf55d35ec6b93a32253becad8ee5b55"
   integrity sha512-LyjVB1nsJ6gTTUKRjRWx9C1s9hE7dLfP/knKdrfeH9UPtAGjYGgxIbFfx7xyLIEWs7Xe1Gnf8EWiUqfjLhInZA==
@@ -957,7 +957,7 @@
   dependencies:
     "@babel/helper-plugin-utils" "^7.24.0"
 
-"@babel/plugin-transform-template-literals@^7.0.0", "@babel/plugin-transform-template-literals@^7.24.1":
+"@babel/plugin-transform-template-literals@^7.0.0", "@babel/plugin-transform-template-literals@^7.0.0-0", "@babel/plugin-transform-template-literals@^7.24.1":
   version "7.24.1"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-template-literals/-/plugin-transform-template-literals-7.24.1.tgz#15e2166873a30d8617e3e2ccadb86643d327aab7"
   integrity sha512-WRkhROsNzriarqECASCNu/nojeXCDTE/F2HmRgOzi7NGvyfYGq1NEjKBK3ckLfRgGc6/lPAqP0vDOSw3YtG34g==
@@ -1129,7 +1129,7 @@
     "@babel/plugin-transform-react-jsx-development" "^7.22.5"
     "@babel/plugin-transform-react-pure-annotations" "^7.24.1"
 
-"@babel/preset-typescript@^7.13.0":
+"@babel/preset-typescript@^7.13.0", "@babel/preset-typescript@^7.16.7":
   version "7.24.1"
   resolved "https://registry.yarnpkg.com/@babel/preset-typescript/-/preset-typescript-7.24.1.tgz#89bdf13a3149a17b3b2a2c9c62547f06db8845ec"
   integrity sha512-1DBaMmRDpuYQBPWD8Pf/WEwCrtgRHxsZnP4mIy9G/X+hFfbI47Q2G4t1Paakld84+qsk2fSsUPMKg71jkoOOaQ==
@@ -1552,6 +1552,21 @@
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
+
+"@gorhom/bottom-sheet@4":
+  version "4.6.1"
+  resolved "https://registry.yarnpkg.com/@gorhom/bottom-sheet/-/bottom-sheet-4.6.1.tgz#e45e2183246e338cf732fe4f8f2c91875b22ddce"
+  integrity sha512-sXqsYqX1/rAbmCC5fb9o6hwSF3KXriC0EGUGvLlhFvjaEEMBrRKFTNndiluRK1HmpUzazVaYdTm/lLkSiA2ooQ==
+  dependencies:
+    "@gorhom/portal" "1.0.14"
+    invariant "^2.2.4"
+
+"@gorhom/portal@1.0.14":
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/@gorhom/portal/-/portal-1.0.14.tgz#1953edb76aaba80fb24021dc774550194a18e111"
+  integrity sha512-MXyL4xvCjmgaORr/rtryDNFy3kU4qUbKlwtQqqsygd0xX3mhKjOLn6mQK8wfu0RkoE0pBE0nAasRoHua+/QZ7A==
+  dependencies:
+    nanoid "^3.3.1"
 
 "@graphql-typed-document-node/core@^3.1.0":
   version "3.2.0"
@@ -5317,7 +5332,7 @@ mz@^2.7.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-nanoid@^3.1.23, nanoid@^3.3.7:
+nanoid@^3.1.23, nanoid@^3.3.1, nanoid@^3.3.7:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.7.tgz#d0c301a691bc8d54efa0a2226ccf3fe2fd656bd8"
   integrity sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==
@@ -5956,6 +5971,20 @@ react-native-pager-view@^6.3.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-6.3.1.tgz#16ef202248311262e3fffd0191d7043a88e8d5fc"
   integrity sha512-U7Ep6ukTA5pKMQskSxHpDI9RoESzBHDcBfVFwnK5SRCy9632Dq4a7Jp2m8vA9mK5k6Vi7yaqqKLFVoHnUdC8zA==
+
+react-native-reanimated@^3.11.0:
+  version "3.11.0"
+  resolved "https://registry.yarnpkg.com/react-native-reanimated/-/react-native-reanimated-3.11.0.tgz#d4265d4e0232623f5958ed60e1686ca884fc3452"
+  integrity sha512-BNw/XDgUfs8UhfY1X6IniU8kWpnotWGyt8qmQviaHisTi5lvwnaOdXQKfN1KGONx6ekdFRHRP5EFwLi0UajwKA==
+  dependencies:
+    "@babel/plugin-transform-arrow-functions" "^7.0.0-0"
+    "@babel/plugin-transform-nullish-coalescing-operator" "^7.0.0-0"
+    "@babel/plugin-transform-optional-chaining" "^7.0.0-0"
+    "@babel/plugin-transform-shorthand-properties" "^7.0.0-0"
+    "@babel/plugin-transform-template-literals" "^7.0.0-0"
+    "@babel/preset-typescript" "^7.16.7"
+    convert-source-map "^2.0.0"
+    invariant "^2.2.4"
 
 react-native-render-html@^6.3.4:
   version "6.3.4"

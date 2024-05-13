@@ -46,7 +46,7 @@ function GetTabBarIcon(routeName, { color, focused, size }) {
         case 'Home':
             name = focused ? 'home' : 'home-outline';
             break;
-        case 'Favorite':
+        case 'Wishlist':
             name = focused ? 'heart' : 'heart-outline';
             break;
         case 'Order':
@@ -63,7 +63,7 @@ function TabNavigation() {
     const { theme } = useTheme();
     return (
         <Tab.Navigator
-            // initialRouteName="Favorite"
+            // initialRouteName="Wishlist"
             screenOptions={({ route }) => {
                 return {
                     headerShown: false,
@@ -74,7 +74,7 @@ function TabNavigation() {
             }}
         >
             <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name="Favorite" component={FavoriteScreen} />
+            <Tab.Screen name="Wishlist" component={FavoriteScreen} />
             <Tab.Screen name="Order" component={TopTabNavigation} />
             <Tab.Screen name="Profile" component={ProfileScreen} />
         </Tab.Navigator>

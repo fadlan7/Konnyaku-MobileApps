@@ -50,7 +50,7 @@ export const LoginScreen = ({ navigation }) => {
     const authService = AuthService();
     const { theme } = useTheme();
     const { width } = Dimensions.get('window');
-    const localStorage = LocalStorage()
+    const localStorage = LocalStorage();
 
     const onSubmit = async (data) => {
         try {
@@ -62,6 +62,11 @@ export const LoginScreen = ({ navigation }) => {
             if (response.statusCode === 200) {
                 clearForm();
                 localStorage.setData('token', response.data.token);
+
+                if (response.data.shopId !== null) {
+                    localStorage.setData('shopId', response.data.shopId);
+                }
+
                 navigation.replace('TabHome');
                 Alert.alert('Success', 'Login Success');
             }
@@ -192,7 +197,7 @@ export const LoginScreen = ({ navigation }) => {
                     fontSize={18}
                     style={styles.customBtn}
                     onPress={handleSubmit(onSubmit)}
-                ></CustomButton>
+                />
             </View>
         </ScrollView>
     );

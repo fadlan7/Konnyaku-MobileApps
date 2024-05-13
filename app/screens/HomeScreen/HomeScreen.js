@@ -17,18 +17,21 @@ import { currencyFormat } from '../../utils/currencyFormat';
 import { ImageBackground } from 'react-native';
 import { ActivityIndicator } from 'react-native';
 import ProductService from '../../services/konnyakuApi/ProductService';
+import ListItem from './components/ListItem';
 
 export const HomeScreen = ({ navigation }) => {
+    const initialPage = 1;
+    const initialSize = 8;
     const { theme } = useTheme();
     const [loading, setLoading] = useState(false);
     const [products, setProducts] = useState([]);
     const [hasNextPage, setHasNextPage] = useState(false);
     const [search, setSearch] = useState('');
-    const [page, setPage] = useState(1);
-    const [size, setSize] = useState(8);
+    const [page, setPage] = useState(initialPage);
+    const [size, setSize] = useState(initialSize);
     const productService = useMemo(() => ProductService(), []);
 
-    const onRefresh = () => {
+    const handleOnRefresh = () => {
         setProducts([]);
         setPage(1);
         setSize(8);
@@ -39,11 +42,12 @@ export const HomeScreen = ({ navigation }) => {
 
     const fetchProducts = async () => {
         try {
+            setPage(1);
             console.log(page);
             setLoading(true);
             const data = await productService.getAll({
                 q: search,
-                page: page,
+                page: 1,
                 size: size,
             });
             setProducts(data.data);
@@ -54,11 +58,11 @@ export const HomeScreen = ({ navigation }) => {
         }
     };
 
-    const loadMore = async () => {
+    const handleLoadMore = async () => {
         if (hasNextPage) {
             setLoading(true);
             console.log('load more dipanggil');
-            // setPage(page + 1);
+            setPage(page + 1);
 
             const data = await productService.getAll({
                 q: search,
@@ -74,9 +78,9 @@ export const HomeScreen = ({ navigation }) => {
                 return [...existingProducts, ...newProducts];
             });
 
-            if (data.paging.hasNext === true) {
-                setPage(page + 1);
-            }
+            // if (data.paging.hasNext === true) {
+            //     setPage(page + 1);
+            // }
             setHasNextPage(data.paging.hasNext);
             setLoading(false);
         }
@@ -84,6 +88,7 @@ export const HomeScreen = ({ navigation }) => {
 
     useEffect(() => {
         fetchProducts();
+        return () => {};
     }, []);
 
     const styles = useMemo(() =>
@@ -93,49 +98,10 @@ export const HomeScreen = ({ navigation }) => {
                 backgroundColor: theme.colors.background,
                 padding: 15,
             },
-            cardContainer: {
-                marginBottom: 10,
-                width: '48%',
-            },
-            prdImage: {
-                width: '100%',
-                height: 200,
-                objectFit: 'cover',
-                borderRadius: 10,
-                borderWidth: 1,
-                borderColor: theme.colors.grey,
-                overflow: 'hidden',
-            },
-            favButton: {
-                position: 'absolute',
-                top: 10,
-                right: 10,
-                backgroundColor: theme.colors.primary,
-                elevation: 5,
-                paddingHorizontal: 5,
-                paddingVertical: 5,
-                borderRadius: 50,
-            },
-            prdName: {
-                fontFamily: 'poppins-regular',
-                fontSize: 14,
-            },
-            prdPrice: {
-                fontFamily: 'poppins-semibold',
-                fontSize: 16,
-            },
-            vendorNameContainer: {
-                flexDirection: 'row',
-            },
-            vendorName: {
-                marginLeft: 5,
-                fontFamily: 'poppins-regular',
-                fontSize: 14,
-            },
         })
     );
 
-    const { width, height } = Dimensions.get('window');
+    const renderItem = ({ item }) => <ListItem item={item} />;
 
     return (
         <View style={styles.container}>
@@ -150,7 +116,7 @@ export const HomeScreen = ({ navigation }) => {
                     }
                     value={search}
                     onChangeText={setSearch}
-                    onSubmitEditing={onRefresh}
+                    onSubmitEditing={handleOnRefresh}
                 />
             </View>
             <View>
@@ -159,66 +125,13 @@ export const HomeScreen = ({ navigation }) => {
                     contentContainerStyle={{ paddingBottom: 70 }}
                     columnWrapperStyle={{ justifyContent: 'space-between' }}
                     refreshing={loading}
-                    onRefresh={onRefresh}
+                    onRefresh={handleOnRefresh}
                     numColumns={2}
                     data={products}
                     keyExtractor={(item) => item.id}
-                    renderItem={({ item }) => {
-                        return (
-                            <TouchableOpacity
-                                onPress={() =>
-                                    navigation.navigate('ProductDetail', item)
-                                }
-                                style={styles.cardContainer}
-                            >
-                                <View>
-                                    <ImageBackground
-                                        source={{
-                                            uri:
-                                                'http://10.10.102.39:8080' +
-                                                item.thumbnail.url,
-                                        }}
-                                        alt={item.thumbnail.name}
-                                        style={styles.prdImage}
-                                    >
-                                        <TouchableOpacity
-                                            style={styles.favButton}
-                                        >
-                                            <Ionicons
-                                                name="heart-outline"
-                                                size={24}
-                                                color={theme.colors.grey}
-                                            />
-                                        </TouchableOpacity>
-                                    </ImageBackground>
-                                </View>
-
-                                <View>
-                                    <Text
-                                        numberOfLines={1}
-                                        style={styles.prdName}
-                                    >
-                                        {item.name}
-                                    </Text>
-                                    <Text style={styles.prdPrice}>
-                                        {currencyFormat(item.priceAmount)}
-                                    </Text>
-                                </View>
-                                {/* <View style={styles.vendorNameContainer}>
-                                    <Ionicons
-                                        name="storefront"
-                                        size={16}
-                                        color={theme.colors.primary}
-                                    />
-                                    <Text style={styles.vendorName}>
-                                        {item.vendorName}
-                                    </Text>
-                                </View> */}
-                            </TouchableOpacity>
-                        );
-                    }}
+                    renderItem={renderItem}
                     onEndReachedThreshold={0}
-                    onEndReached={loadMore}
+                    onEndReached={handleLoadMore}
                     ListFooterComponent={() =>
                         loading && (
                             <ActivityIndicator
