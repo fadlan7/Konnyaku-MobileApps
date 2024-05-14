@@ -74,6 +74,29 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                 alignItems: 'center',
                 columnGap: 8,
             },
+            bottomSheetContainer: {
+                width: '100%',
+                height: 60,
+                elevation: 1,
+                paddingHorizontal: 20,
+                backgroundColor: theme.colors.background,
+                justifyContent: 'center',
+                alignItems: 'center',
+                position: 'absolute',
+                borderWidth: 1,
+                borderColor: theme.colors.primary,
+                borderTopStartRadius: 10,
+                borderTopEndRadius: 10,
+                bottom: 0,
+                zIndex: 1,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+            },
+            lightboxContainer:{
+                borderBottomWidth: 0.5,
+                borderBlockColor:
+                    theme.colors.primary,
+            },
             containerPrdImage: {
                 width: width,
             },
@@ -119,41 +142,8 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                 >
                     <Ionicons name="arrow-back" size={24} />
                 </TouchableOpacity>
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                    }}
-                >
-                    <TouchableOpacity>
-                        <Ionicons
-                            name="heart-outline"
-                            size={24}
-                            color={theme.colors.text}
-                        />
-                    </TouchableOpacity>
-                </View>
             </View>
-            <View
-                style={{
-                    width: '100%',
-                    height: 60,
-                    elevation: 1,
-                    paddingHorizontal: 20,
-                    backgroundColor: theme.colors.background,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    position: 'absolute',
-                    borderWidth: 0.5,
-                    borderColor: theme.colors.primary,
-                    borderTopStartRadius: 10,
-                    borderTopEndRadius: 10,
-                    bottom: 0,
-                    zIndex: 1,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                }}
-            >
+            <View style={styles.bottomSheetContainer}>
                 <View>
                     <Text style={{ fontFamily: 'poppins-light' }}>
                         Total price
@@ -192,11 +182,7 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                                 return (
                                     <View>
                                         <Lightbox
-                                            style={{
-                                                borderBottomWidth: 0.5,
-                                                borderBlockColor:
-                                                    theme.colors.primary,
-                                            }}
+                                            style={styles.lightboxContainer}
                                         >
                                             <View
                                                 style={styles.containerPrdImage}

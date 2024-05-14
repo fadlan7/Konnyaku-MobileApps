@@ -105,6 +105,7 @@ export const HomeScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
+            <View></View>
             <View style={{ paddingVertical: 10 }}>
                 <CustomTextInput
                     preIcon={

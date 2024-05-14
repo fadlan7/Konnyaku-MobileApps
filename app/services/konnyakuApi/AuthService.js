@@ -47,6 +47,7 @@ const AuthService = () => {
     const logout = async () => {
         await LocalStorage().removeData('token');
         await LocalStorage().removeData('shopId')
+        await LocalStorage().removeData('userAccountId')
     };
 
     return { registerUser, login, checkToken, logout };

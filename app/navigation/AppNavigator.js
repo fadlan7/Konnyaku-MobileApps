@@ -18,6 +18,7 @@ import { ShopRegistrationScreen } from '../screens/ShopRegistrationScreen/ShopRe
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { ActiveOrderScreen } from '../screens/OrderScreen/ActiveOrderScreen/ActiveOrderScreen';
 import { CompletedOrderScreen } from '../screens/OrderScreen/CompletedOrderScreen/CompletedOrderScreen';
+import { EditProfileScreen } from '../screens/EditProfileScreen/EditProfileScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -100,6 +101,7 @@ function StackNavigation() {
                 name="ShopRegistration"
                 component={ShopRegistrationScreen}
             />
+            <Stack.Screen name="EditProfile" component={EditProfileScreen} />
         </Stack.Navigator>
     );
 }

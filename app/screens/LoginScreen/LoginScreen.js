@@ -62,6 +62,7 @@ export const LoginScreen = ({ navigation }) => {
             if (response.statusCode === 200) {
                 clearForm();
                 localStorage.setData('token', response.data.token);
+                localStorage.setData('userAccountId', response.data.userAccountId);
 
                 if (response.data.shopId !== null) {
                     localStorage.setData('shopId', response.data.shopId);

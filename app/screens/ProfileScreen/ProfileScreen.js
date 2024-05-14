@@ -11,13 +11,19 @@ import AuthService from '../../services/konnyakuApi/AuthService';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from '../../context/ThemeContext';
 import LocalStorage from '../../utils/LocalStorage';
+import UserService from '../../services/konnyakuApi/UserService';
 
 export const ProfileScreen = ({ navigation }) => {
-    const authService = AuthService();
+    const authService = useMemo(() => AuthService(), []);
     const { theme } = useTheme();
     const localStorage = LocalStorage();
     const [shopId, setShopId] = useState(null);
     const [token, setToken] = useState(null);
+    const [userAccountId, setUserAccountId] = useState(null);
+    const [userId, setUserId] = useState(null);
+    const [user, setUser] = useState(null);
+    const userService = useMemo(() => UserService(), []);
+    // const userService = UserService();
 
     const handleLogout = () => {
         Alert.alert('Logout', 'apakah yakin ingin logout?', [
@@ -35,21 +41,48 @@ export const ProfileScreen = ({ navigation }) => {
         ]);
     };
 
-    const checkShopId = async () => {
+    const setId = async () => {
         const shopId = await localStorage.getData('shopId');
         const token = await localStorage.getData('token');
+        const userAccountId = await localStorage.getData('userAccountId');
 
         setToken(token);
+        setUserAccountId(userAccountId);
 
         if (shopId !== undefined) {
             setShopId(shopId);
         }
     };
 
+    const getUserId = async () => {
+        try {
+            const userId = await userService.getUserIdByAccountId(
+                userAccountId
+            );
+            setUserId(userId.data.id);
+        } catch (error) {
+            Alert.alert(error);
+        }
+    };
+
+    const fetchUserData = async () => {
+        try {
+            const data = await userService.getUserByUserId(userId);
+            setUser(data.data);
+        } catch (error) {
+            Alert.alert(error);
+        }
+    };
+
     useEffect(() => {
-        setToken(null)
-        checkShopId();
-    }, []);
+        setId();
+        if (userAccountId) {
+            getUserId();
+        }
+        if (userId) {
+            fetchUserData();
+        }
+    }, [userAccountId, userId]);
 
     const styles = useMemo(() =>
         StyleSheet.create({
@@ -75,6 +108,20 @@ export const ProfileScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
+            <View style={{}}>
+                {user && (
+                    <TouchableOpacity
+                        onPress={() => navigation.navigate('EditProfile', user)}
+                        style={styles.btnContainer}
+                    >
+                        <View style={styles.iconContainer}>
+                            <Ionicons name="person-outline" size={24} />
+                            <Text>Edit Profile</Text>
+                        </View>
+                        <Ionicons name="chevron-forward" size={18} />
+                    </TouchableOpacity>
+                )}
+            </View>
             {shopId !== null ? (
                 <TouchableOpacity
                     onPress={() => {
