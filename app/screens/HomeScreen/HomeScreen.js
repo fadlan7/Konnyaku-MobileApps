@@ -43,7 +43,6 @@ export const HomeScreen = ({ navigation }) => {
     const fetchProducts = async () => {
         try {
             setPage(1);
-            console.log(page);
             setLoading(true);
             const data = await productService.getAll({
                 q: search,
@@ -61,7 +60,6 @@ export const HomeScreen = ({ navigation }) => {
     const handleLoadMore = async () => {
         if (hasNextPage) {
             setLoading(true);
-            console.log('load more dipanggil');
             setPage(page + 1);
 
             const data = await productService.getAll({
