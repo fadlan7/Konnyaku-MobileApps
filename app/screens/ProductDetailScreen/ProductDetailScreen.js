@@ -18,7 +18,7 @@ import CustomButton from '../../shared/components/CustomButton';
 
 export const ProductDetailScreen = ({ route, navigation }) => {
     const { theme } = useTheme();
-    const { name, description, priceAmount, weight, details, images } =
+    const { name, description, priceAmount, weight, details, thumbnail,shop } =
         route.params;
     const { width, height } = Dimensions.get('window');
     const [activeIndex, setActiveIndex] = useState(0);
@@ -27,6 +27,16 @@ export const ProductDetailScreen = ({ route, navigation }) => {
 
     const topRef = useRef(null);
     const thumbRef = useRef(null);
+
+    const product = {
+        name,
+        description,
+        priceAmount,
+        weight,
+        details,
+        thumbnail,
+        shop
+    };
 
     const scrollToActiveIndex = (index) => {
         setActiveIndex(index);
@@ -92,10 +102,9 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
             },
-            lightboxContainer:{
+            lightboxContainer: {
                 borderBottomWidth: 0.5,
-                borderBlockColor:
-                    theme.colors.primary,
+                borderBlockColor: theme.colors.primary,
             },
             containerPrdImage: {
                 width: width,
@@ -153,12 +162,12 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                     </Text>
                 </View>
                 <CustomButton
-                    title="Check out"
+                    title="Checkout"
                     color="#fff"
                     fontFamily="poppins-semibold"
                     fontSize={14}
                     style={styles.customBtn}
-                    // onPress={handleSubmit(onSubmit)}
+                    onPress={() => navigation.navigate('Checkout', product)}
                 />
             </View>
             <FlatList

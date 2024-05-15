@@ -19,6 +19,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import { ActiveOrderScreen } from '../screens/OrderScreen/ActiveOrderScreen/ActiveOrderScreen';
 import { CompletedOrderScreen } from '../screens/OrderScreen/CompletedOrderScreen/CompletedOrderScreen';
 import { EditProfileScreen } from '../screens/EditProfileScreen/EditProfileScreen';
+import { CheckoutScreen } from '../screens/CheckoutScreen/CheckoutScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -102,6 +103,7 @@ function StackNavigation() {
                 component={ShopRegistrationScreen}
             />
             <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+            <Stack.Screen name="Checkout" component={CheckoutScreen} />
         </Stack.Navigator>
     );
 }
