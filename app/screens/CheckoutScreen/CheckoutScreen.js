@@ -11,56 +11,163 @@ import {
 } from 'react-native';
 import { useTheme } from '../../context/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
-import { currencyFormat } from '../../utils/currencyFormat';
+import { currencyFormat, url } from '../../utils/currencyFormat';
 import CustomButton from '../../shared/components/CustomButton';
 import LocalStorage from '../../utils/LocalStorage';
 import UserService from '../../services/konnyakuApi/UserService';
+import CalendarPicker from 'react-native-calendar-picker';
+import OngkirService from '../../services/rajaOngkirApi/ongkirService';
+import { Picker } from '@react-native-picker/picker';
+import { Button } from 'react-native';
+import { Alert } from 'react-native';
 
 export const CheckoutScreen = ({ route, navigation }) => {
     const { theme } = useTheme();
-    const { name, description, priceAmount, weight, details, thumbnail, shop } =
-        route.params;
+    const {
+        name,
+        description,
+        priceAmount,
+        weight,
+        details,
+        thumbnail,
+        shop,
+        user,
+    } = route.params;
     const { width, height } = Dimensions.get('window');
     const localStorage = LocalStorage();
-    const [userAccountId, setUserAccountId] = useState(null);
-    const [userId, setUserId] = useState(null);
-    const [user, setUser] = useState(null);
-    const userService = useMemo(() => UserService(), []);
+    // const [userAccountId, setUserAccountId] = useState(null);
+    // const [userId, setUserId] = useState(null);
+    // const [user, setUser] = useState(null);
+    const [selectedStartDate, setSelectedStartDate] = useState('YYYY-MM-DD');
+    const [selectedEndDate, setSelectedEndDate] = useState('YYYY-MM-DD');
+    const [courier, setCourier] = useState('jne');
+    const [service, setService] = useState('');
+    const [services, setServices] = useState([]);
+    // const userService = useMemo(() => UserService(), []);
+    const ongkirService = useMemo(() => OngkirService(), []);
+    const [amount, setAmount] = useState(null);
 
-    const setId = async () => {
-        const userAccountId = await localStorage.getData('userAccountId');
-        setUserAccountId(userAccountId);
+    // const setId = async () => {
+    //     const userAccountId = await localStorage.getData('userAccountId');
+    //     setUserAccountId(userAccountId);
+    // };
+
+    // const getUserId = async () => {
+    //     try {
+    //         const userId = await userService.getUserIdByAccountId(
+    //             userAccountId
+    //         );
+    //         setUserId(userId.data.id);
+    //     } catch (error) {
+    //         Alert.alert(error);
+    //     }
+    // };
+
+    // const fetchUserData = async () => {
+    //     try {
+    //         const data = await userService.getUserByUserId(userId);
+    //         setUser(data.data);
+    //     } catch (error) {
+    //         Alert.alert(error);
+    //     }
+    // };
+
+    const currentDate = new Date();
+    const minDate = new Date();
+    minDate.setDate(currentDate.getDate() + 5);
+
+    const maxDate = new Date(minDate);
+    maxDate.setDate(minDate.getDate() + 20);
+
+    const onDateChange = (date, type) => {
+        const newDate = JSON.stringify(date);
+        const newDate1 = newDate.substring(1, newDate.length - 1);
+
+        const dates = newDate1.split('T');
+        const date1 = dates[0].split('-');
+        const day = date1[2];
+        const month = date1[1];
+        const year = date1[0];
+
+        if (type == 'END_DATE') {
+            if (day === undefined) {
+                setSelectedEndDate('YYYY-MM-DD');
+            } else {
+                setSelectedEndDate(year + '-' + month + '-' + day);
+            }
+        } else {
+            setSelectedStartDate(year + '-' + month + '-' + day);
+            setSelectedEndDate(year + '-' + month + '-' + day);
+        }
     };
+    // const handleCourierChange = (courier) => {
+    //     setCourier(courier);
+    //     fetchCost(courier);
+    // };
 
-    const getUserId = async () => {
+    const fetchCost = async () => {
         try {
-            const userId = await userService.getUserIdByAccountId(
-                userAccountId
+            const response = await ongkirService.getCost(
+                shop.address.cityId,
+                user.address.cityId,
+                weight,
+                courier
             );
-            setUserId(userId.data.id);
+            const costs = response.rajaongkir.results[0].costs[0];
+            setServices(costs);
+            setService(costs);
+            console.log(costs);
+            // if (costs.length === 1) {
+            //     const selectedService = {
+            //         service: costs[0].service,
+            //         description: costs[0].description,
+            //         cost: costs[0].cost[0].value,
+            //     };
+            //     setService(selectedService);
+            // } else {
+            //     setService(null);
+            // }
         } catch (error) {
-            Alert.alert(error);
+            console.log(
+                'Failed to fetch cost. Please check the console for more details.'
+            );
         }
     };
 
-    const fetchUserData = async () => {
-        try {
-            const data = await userService.getUserByUserId(userId);
-            setUser(data.data);
-        } catch (error) {
-            Alert.alert(error);
-        }
-    };
+    // useEffect(() => {
+    //     setId();
+    //     if (userAccountId) {
+    //         getUserId();
+    //     }
+    //     if (userId) {
+    //         fetchUserData();
+    //     }
+    //     if (courier) {
+    //         fetchCost();
+    //     }
+    // }, [userAccountId, userId, courier]);
+
+    // useEffect(() => {
+    //     setId();
+    // }, []);
+
+    // useEffect(() => {
+    //     if (userAccountId) {
+    //         getUserId();
+    //     }
+    // }, [userAccountId]);
+
+    // useEffect(() => {
+    //     if (userId) {
+    //         fetchUserData();
+    //     }
+    // }, [userId]);
 
     useEffect(() => {
-        setId();
-        if (userAccountId) {
-            getUserId();
-        }
-        if (userId) {
-            fetchUserData();
-        }
-    }, [userAccountId, userId]);
+        // if (courier !== null) {
+        fetchCost();
+        // }
+    }, []);
 
     const styles = useMemo(() =>
         StyleSheet.create({
@@ -98,7 +205,7 @@ export const CheckoutScreen = ({ route, navigation }) => {
                 justifyContent: 'space-around',
                 marginLeft: 10,
                 paddingVertical: 10,
-                width: '45%',
+                width: '80%',
             },
             favButton: {
                 backgroundColor: theme.colors.primary,
@@ -124,6 +231,16 @@ export const CheckoutScreen = ({ route, navigation }) => {
                 borderColor: theme.colors.primary,
                 marginBottom: 10,
             },
+            picker: {
+                height: 50,
+                width: '100%',
+            },
+            customBtn: {
+                backgroundColor: theme.colors.primary,
+                padding: 10,
+                borderRadius: 10,
+                alignItems: 'center',
+            },
         })
     );
     return (
@@ -141,9 +258,10 @@ export const CheckoutScreen = ({ route, navigation }) => {
                     </Text>
                 </TouchableOpacity>
             </View>
-            <View
+            <ScrollView
+                showsVerticalScrollIndicator={false}
                 style={{
-                    margin: 15,
+                    marginHorizontal: 15,
                 }}
             >
                 {user && (
@@ -166,9 +284,79 @@ export const CheckoutScreen = ({ route, navigation }) => {
 
                 <View>
                     <Text style={styles.header}>Choose Shipping Type</Text>
-                    <View
-                        style={styles.horizontalLine}
+                    <Text>Select Courier</Text>
+
+                    {/* <Picker
+                        mode="dropdown"
+                        selectedValue={courier}
+                        style={styles.picker}
+                        // onValueChange={(itemValue) => setCourier(itemValue)}
+                        onValueChange={(itemValue) => {
+                            handleCourierChange(itemValue);
+                        }}
+                    >
+                        <Picker.Item label="Pilih Kurir" value="" />
+                        <Picker.Item label="JNE" value="jne" />
+                        <Picker.Item label="TIKI" value="tiki" />
+                        <Picker.Item label="POS INDO" value="pos" />
+                    </Picker> */}
+
+                    {/* {services.length > 0 && (
+                        <>
+                            <Text>Select Service</Text>
+                            <Picker
+                                selectedValue={service ? service.service : ''}
+                                style={styles.picker}
+                                onValueChange={(itemValue) => {
+                                    const selectedService = services.find(
+                                        (s) => s.service === itemValue
+                                    );
+                                    if (selectedService) {
+                                        const { service, description, cost } =
+                                            selectedService;
+                                        setService({
+                                            service,
+                                            description,
+                                            cost: cost[0].value,
+                                        });
+                                    } else {
+                                        setService(null);
+                                    }
+                                }}
+                            >
+                                <Picker.Item label="Pilih Layanan" value="" />
+                                {services.map((service) => (
+                                    <Picker.Item
+                                        key={service.service}
+                                        label={`${service.service} - ${service.description} - Rp.${service.cost[0].value} - ${service.cost[0].etd} days`}
+                                        value={service.service}
+                                    />
+                                ))}
+                            </Picker>
+                        </>
+                    )} */}
+
+                    <View style={styles.horizontalLine} />
+                </View>
+
+                <View>
+                    <Text style={styles.header}>Select Rental Date</Text>
+
+                    {/* {console.log(user)} */}
+                    <CalendarPicker
+                        startFromMonday={true}
+                        allowRangeSelection={true}
+                        minDate={minDate}
+                        maxDate={maxDate}
+                        todayBackgroundColor="#f2e6ff"
+                        selectedDayColor={theme.colors.primary}
+                        selectedDayTextColor="#FFFFFF"
+                        onDateChange={onDateChange}
                     />
+
+                    <Text>{selectedStartDate}</Text>
+                    <Text>{selectedEndDate}</Text>
+                    <View style={[styles.horizontalLine, { marginTop: 15 }]} />
                 </View>
 
                 <View>
@@ -176,29 +364,46 @@ export const CheckoutScreen = ({ route, navigation }) => {
                     <View style={styles.cardContainer}>
                         <Image
                             source={{
-                                uri: `http://10.10.102.39:8080${thumbnail.url}`,
+                                uri: `${url}${thumbnail.url}`,
                             }}
                             alt={thumbnail.name}
                             style={styles.prdImage}
                         />
 
                         <View style={styles.prdDescContainer}>
-                            <Text numberOfLines={1} style={styles.prdName}>
-                                {name}
-                            </Text>
+                            <Text style={styles.prdName}>{name}</Text>
                             <Text style={styles.prdPrice}>
                                 {currencyFormat(priceAmount)}
                             </Text>
                         </View>
                     </View>
-                    <View
-                        style={styles.horizontalLine}
-                    />
+                    <View style={styles.horizontalLine} />
                 </View>
 
                 <Text style={styles.header}>Ringkasan Belanja</Text>
-                <Text>{priceAmount}</Text>
-            </View>
+                <Text> harga {priceAmount}</Text>
+
+                {service && (
+                    <View>
+                        <Text>
+                            Ongkos Kirim {service.cost.toLocaleString()}
+                        </Text>
+                        <Text>
+                            {/* {priceAmount + service.cost} */}
+                            {setAmount(priceAmount + service.cost)}
+                        </Text>
+                    </View>
+                )}
+
+                <CustomButton
+                    title="Continue to Payment"
+                    color="#fff"
+                    fontFamily="poppins-semibold"
+                    fontSize={18}
+                    style={styles.customBtn}
+                    // onPress={handleSubmit(onSubmit)}
+                />
+            </ScrollView>
 
             {/* {console.log(
                 name,

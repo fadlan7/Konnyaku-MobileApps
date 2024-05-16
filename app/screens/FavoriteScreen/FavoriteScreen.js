@@ -4,7 +4,7 @@ import { View, TouchableOpacity, ImageBackground, Text } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { useTheme } from '../../context/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
-import { currencyFormat } from '../../utils/currencyFormat';
+import { currencyFormat, url } from '../../utils/currencyFormat';
 import { Image } from 'react-native';
 import WishlistService from '../../services/konnyakuApi/WishlistService';
 import { Alert } from 'react-native';
@@ -181,7 +181,7 @@ export const FavoriteScreen = ({ navigation }) => {
                         >
                             <Image
                                 source={{
-                                    uri: `http://10.10.102.39:8080${item.product.thumbnail.url}`,
+                                    uri: `${url}${item.product.thumbnail.url}`,
                                 }}
                                 alt={item.product.thumbnail.name}
                                 style={styles.prdImage}

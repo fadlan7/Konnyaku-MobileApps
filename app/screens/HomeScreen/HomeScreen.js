@@ -20,6 +20,7 @@ import ProductService from '../../services/konnyakuApi/ProductService';
 import ListItem from './components/ListItem';
 
 export const HomeScreen = ({ navigation }) => {
+    const { width, height } = Dimensions.get('window');
     const initialPage = 1;
     const initialSize = 8;
     const { theme } = useTheme();
@@ -49,7 +50,12 @@ export const HomeScreen = ({ navigation }) => {
                 page: 1,
                 size: size,
             });
-            setProducts(data.data);
+
+            const newProducts = data.data.filter(
+                (product) => product.status !== 'REMOVED'
+            );
+
+            setProducts(newProducts);
             setHasNextPage(data.paging.hasNext);
             setLoading(false);
         } catch (err) {
@@ -69,7 +75,9 @@ export const HomeScreen = ({ navigation }) => {
             });
 
             const newProducts = data.data.filter(
-                (product) => !products.some((p) => p.id === product.id)
+                (product) =>
+                    !products.some((p) => p.id === product.id) &&
+                    product.status !== 'REMOVED'
             );
 
             setProducts((existingProducts) => {
@@ -120,6 +128,32 @@ export const HomeScreen = ({ navigation }) => {
             </View>
             <View>
                 <FlatList
+                    ListEmptyComponent={
+                        products.length == 0 && (
+                            <View
+                                style={{
+                                    flex: 1,
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    height: height - 50,
+                                }}
+                            >
+                                <Image
+                                    style={{
+                                        width: width,
+                                        height: width,
+                                    }}
+                                    source={require('../../shared/assets/images/login.png')}
+                                    resizeMode="contain"
+                                />
+                                <Text
+                                    style={{ fontFamily: 'poppins-semibold' }}
+                                >
+                                    Doesn't have a product
+                                </Text>
+                            </View>
+                        )
+                    }
                     showsVerticalScrollIndicator={false}
                     contentContainerStyle={{ paddingBottom: 70 }}
                     columnWrapperStyle={{ justifyContent: 'space-between' }}

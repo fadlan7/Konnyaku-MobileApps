@@ -4,7 +4,7 @@ const ShopService = () => {
     const registerShop = async (formData) => {
         try {
             const response = await apiClient({
-                url: '/api/shop',
+                url: '/api/auth/register-shop',
                 method: 'post',
                 data: formData,
                 multipart: false,

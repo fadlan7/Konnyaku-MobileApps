@@ -1,8 +1,9 @@
 import axios from 'axios';
 import LocalStorage from '../../utils/LocalStorage';
+import { url } from '../../utils/currencyFormat';
 
 const axiosInstance = axios.create({
-    baseURL: 'http://10.10.102.39:8080',
+    baseURL: url,
 });
 
 axiosInstance.interceptors.request.use(

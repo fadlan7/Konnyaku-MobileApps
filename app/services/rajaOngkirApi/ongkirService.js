@@ -33,9 +33,47 @@ const OngkirService = () => {
         }
     };
 
+    const getCost = async (origin, destination, weight, courier) => {
+        try {
+            const { data } = await ongkirClient.post(
+                '/cost',
+                new URLSearchParams({
+                    origin,
+                    destination,
+                    weight,
+                    courier,
+                }).toString()
+            );
+            return data;
+        } catch (error) {
+            console.error(
+                'Error fetching cost:',
+                error.response ? error.response.data : error.message
+            );
+            throw error;
+        }
+    };
+
+    // const getCost = async (origin, destination, weight, courier) => {
+    //     try {
+    //         const { data } = await ongkirClient.post('/cost', {
+    //             params: {
+    //                 origin,
+    //                 destination,
+    //                 weight,
+    //                 courier,
+    //             },
+    //         });
+    //         return data;
+    //     } catch (error) {
+    //         throw error;
+    //     }
+    // };
+
     return {
         getProvinces,
         getCitiesByProvince,
+        getCost,
     };
 };
 

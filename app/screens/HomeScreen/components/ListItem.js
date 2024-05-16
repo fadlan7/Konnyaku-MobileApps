@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ImageBackground } from 'react-native';
 import { useTheme } from '../../../context/ThemeContext';
-import { currencyFormat } from '../../../utils/currencyFormat';
+import { currencyFormat, url } from '../../../utils/currencyFormat';
 import { useNavigation } from '@react-navigation/native';
 import LocalStorage from '../../../utils/LocalStorage';
 import { jwtDecode } from 'jwt-decode';
@@ -94,7 +94,7 @@ const ListItem = React.memo(({ item }) => {
             <View>
                 <ImageBackground
                     source={{
-                        uri: `http://10.10.102.39:8080${item.thumbnail.url}`,
+                        uri: `${url}${item.thumbnail.url}`,
                     }}
                     alt={item.thumbnail.name}
                     style={styles.prdImage}

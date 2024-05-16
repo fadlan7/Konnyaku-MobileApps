@@ -13,29 +13,79 @@ import { useTheme } from '../../context/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import Lightbox from 'react-native-lightbox-v2';
 import RenderHTML from 'react-native-render-html';
-import { currencyFormat } from '../../utils/currencyFormat';
+import { currencyFormat, url } from '../../utils/currencyFormat';
 import CustomButton from '../../shared/components/CustomButton';
+import LocalStorage from '../../utils/LocalStorage';
+import { Alert } from 'react-native';
+import UserService from '../../services/konnyakuApi/UserService';
 
 export const ProductDetailScreen = ({ route, navigation }) => {
     const { theme } = useTheme();
-    const { name, description, priceAmount, weight, details, thumbnail,shop } =
+    const { name, description, priceAmount, weight, details, thumbnail, shop } =
         route.params;
     const { width, height } = Dimensions.get('window');
     const [activeIndex, setActiveIndex] = useState(0);
+    const [userAccountId, setUserAccountId] = useState(null);
+    const [userId, setUserId] = useState(null);
+    const [user, setUser] = useState(null);
+    const localStorage = LocalStorage();
+    const userService = useMemo(() => UserService(), []);
     const IMAGE_SIZE = 80;
     const SPACING = 10;
 
     const topRef = useRef(null);
     const thumbRef = useRef(null);
 
-    const product = {
+    const setId = async () => {
+        const userAccountId = await localStorage.getData('userAccountId');
+        setUserAccountId(userAccountId);
+    };
+
+    const getUserId = async () => {
+        try {
+            const userId = await userService.getUserIdByAccountId(
+                userAccountId
+            );
+            setUserId(userId.data.id);
+        } catch (error) {
+            // Alert.alert(error);
+        }
+    };
+
+    const fetchUserData = async () => {
+        try {
+            const data = await userService.getUserByUserId(userId);
+            setUser(data.data);
+        } catch (error) {
+            // Alert.alert(error);
+        }
+    };
+
+    useEffect(() => {
+        setId();
+    }, []);
+
+    useEffect(() => {
+        if (userAccountId) {
+            getUserId();
+        }
+    }, [userAccountId]);
+
+    useEffect(() => {
+        if (userId) {
+            fetchUserData();
+        }
+    }, [userId]);
+
+    const data = {
         name,
         description,
         priceAmount,
         weight,
         details,
         thumbnail,
-        shop
+        shop,
+        user,
     };
 
     const scrollToActiveIndex = (index) => {
@@ -140,6 +190,14 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                 borderRadius: 20,
                 alignItems: 'center',
             },
+            imgDetail: {
+                width: 200,
+                height: 200,
+                borderRadius: 12,
+                marginRight: 10,
+                borderWidth: 1,
+                borderColor: theme.colors.secondary,
+            },
         })
     );
     return (
@@ -167,7 +225,7 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                     fontFamily="poppins-semibold"
                     fontSize={14}
                     style={styles.customBtn}
-                    onPress={() => navigation.navigate('Checkout', product)}
+                    onPress={() => navigation.navigate('Checkout', data)}
                 />
             </View>
             <FlatList
@@ -198,7 +256,7 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                                             >
                                                 <Image
                                                     source={{
-                                                        uri: `http://10.10.102.39:8080${item.image.url}`,
+                                                        uri: `${url}${item.image.url}`,
                                                     }}
                                                     style={styles.prdImage}
                                                 />
@@ -254,7 +312,7 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                                     >
                                         <Image
                                             source={{
-                                                uri: `http://10.10.102.39:8080${item.image.url}`,
+                                                uri: `${url}${item.image.url}`,
                                             }}
                                             style={[
                                                 styles.imgThumbnail,
@@ -297,6 +355,12 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                             >
                                 {name}
                             </Text>
+                            <Image
+                                source={{
+                                    uri: `${url}${thumbnail.url}`,
+                                }}
+                                style={[styles.imgDetail]}
+                            />
                             <Text
                                 style={{
                                     fontSize: 18,
@@ -306,7 +370,7 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                                     marginBottom: -10,
                                 }}
                             >
-                                Product Details
+                                Product Description
                             </Text>
                             <RenderHTML
                                 contentWidth={width}
