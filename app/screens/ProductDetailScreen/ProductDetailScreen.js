@@ -21,7 +21,7 @@ import UserService from '../../services/konnyakuApi/UserService';
 
 export const ProductDetailScreen = ({ route, navigation }) => {
     const { theme } = useTheme();
-    const { name, description, priceAmount, weight, details, thumbnail, shop } =
+    const {id, name, description, priceAmount, weight, details, thumbnail, shop } =
         route.params;
     const { width, height } = Dimensions.get('window');
     const [activeIndex, setActiveIndex] = useState(0);
@@ -78,6 +78,7 @@ export const ProductDetailScreen = ({ route, navigation }) => {
     }, [userId]);
 
     const data = {
+        id,
         name,
         description,
         priceAmount,
@@ -86,6 +87,7 @@ export const ProductDetailScreen = ({ route, navigation }) => {
         thumbnail,
         shop,
         user,
+        userAccountId
     };
 
     const scrollToActiveIndex = (index) => {

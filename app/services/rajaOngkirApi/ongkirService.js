@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const API_URL = 'https://api.rajaongkir.com/starter';
-const KEY = 'e1a00d7500cbd448a553cfdc2406e698';
+// const KEY = 'e1a00d7500cbd448a553cfdc2406e698';
+const KEY = '7645ca40576aaf548397baab0d660c48';
 
 const ongkirClient = axios.create({
     baseURL: API_URL,
@@ -46,29 +47,10 @@ const OngkirService = () => {
             );
             return data;
         } catch (error) {
-            console.error(
-                'Error fetching cost:',
-                error.response ? error.response.data : error.message
-            );
+            // console.error('Error fetching cost:');
             throw error;
         }
     };
-
-    // const getCost = async (origin, destination, weight, courier) => {
-    //     try {
-    //         const { data } = await ongkirClient.post('/cost', {
-    //             params: {
-    //                 origin,
-    //                 destination,
-    //                 weight,
-    //                 courier,
-    //             },
-    //         });
-    //         return data;
-    //     } catch (error) {
-    //         throw error;
-    //     }
-    // };
 
     return {
         getProvinces,
