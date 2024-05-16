@@ -47,7 +47,6 @@ const OngkirService = () => {
             );
             return data;
         } catch (error) {
-            // console.error('Error fetching cost:');
             throw error;
         }
     };

@@ -86,6 +86,7 @@ export const CheckoutScreen = ({ route, navigation }) => {
                 'jne'
             );
             const costs = response.rajaongkir.results[0].costs[0].cost[0].value;
+            console.log(costs);
             setShippingCost(costs);
         } catch (error) {
             console.log('error fetching cost');
@@ -104,7 +105,6 @@ export const CheckoutScreen = ({ route, navigation }) => {
 
             const response = await transactionService.create(data);
             // console.log(response.data.data.paymentResponse.redirectUrl);
-            console.log(response.paymentResponse.redirectUrl);
             Linking.openURL(response.paymentResponse.redirectUrl);
             Alert.alert('Success', 'Please make payment');
             navigation.replace('TabHome');
@@ -121,12 +121,13 @@ export const CheckoutScreen = ({ route, navigation }) => {
         if (selectedStartDate && selectedEndDate) {
             getDayRange();
         }
-    }, [selectedStartDate, selectedEndDate]);
+    }, [selectedStartDate, selectedEndDate, fetchCost]);
 
     const styles = useMemo(() =>
         StyleSheet.create({
             container: {
                 flex: 1,
+                paddingBottom: 20,
                 backgroundColor: theme.colors.background,
             },
             headerContainer: {
@@ -193,8 +194,18 @@ export const CheckoutScreen = ({ route, navigation }) => {
                 backgroundColor: theme.colors.primary,
                 padding: 10,
                 borderRadius: 10,
+                marginVertical: 15,
                 alignItems: 'center',
             },
+            containerSummaryItem: {
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+            },
+            summaryItemTitle: {
+                fontFamily: 'poppins-light',
+                fontSize: 15,
+            },
+            summaryItem: { fontFamily: 'poppins-semibold', fontSize: 15 },
         })
     );
     return (
@@ -275,19 +286,41 @@ export const CheckoutScreen = ({ route, navigation }) => {
                     <View style={styles.horizontalLine} />
                 </View>
 
-                <Text style={styles.header}>Ringkasan Belanja</Text>
-                <Text>Price {priceAmount}</Text>
-                <Text>Hari sewa: {rentalRange}</Text>
+                <Text style={styles.header}>Shopping Summary</Text>
+                <View style={styles.containerSummaryItem}>
+                    <Text style={styles.summaryItemTitle}>Price</Text>
+                    <Text style={styles.summaryItem}>
+                        {currencyFormat(priceAmount)}
+                    </Text>
+                </View>
+                <View style={styles.containerSummaryItem}>
+                    <Text style={styles.summaryItemTitle}>
+                        Rental day range
+                    </Text>
+                    <Text style={styles.summaryItem}>{rentalRange}</Text>
+                </View>
 
                 {amount && (
                     <>
-                        <Text>Shipping Cost: {shippingCost}</Text>
-                        <Text>Total {amount}</Text>
+                        <View style={styles.containerSummaryItem}>
+                            <Text style={styles.summaryItemTitle}>
+                                Shipping cost
+                            </Text>
+                            <Text style={styles.summaryItem}>
+                                {currencyFormat(shippingCost)}
+                            </Text>
+                        </View>
+                        <View style={styles.containerSummaryItem}>
+                            <Text style={styles.summaryItemTitle}>Total</Text>
+                            <Text style={styles.summaryItem}>
+                                {currencyFormat(amount)}
+                            </Text>
+                        </View>
                         <CustomButton
                             title="Continue to Payment"
                             color="#fff"
                             fontFamily="poppins-semibold"
-                            fontSize={18}
+                            fontSize={16}
                             style={styles.customBtn}
                             onPress={onSubmitTransaction}
                         />

@@ -20,6 +20,7 @@ import { ActiveOrderScreen } from '../screens/OrderScreen/ActiveOrderScreen/Acti
 import { CompletedOrderScreen } from '../screens/OrderScreen/CompletedOrderScreen/CompletedOrderScreen';
 import { EditProfileScreen } from '../screens/EditProfileScreen/EditProfileScreen';
 import { CheckoutScreen } from '../screens/CheckoutScreen/CheckoutScreen';
+import { RentOrderScreen } from '../screens/OrderScreen/RentOrderScreen/RentOrderScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -36,7 +37,8 @@ function TopTabNavigation() {
                 tabBarIndicatorStyle: { backgroundColor: theme.colors.primary },
             }}
         >
-            <TopTab.Screen name="Active" component={ActiveOrderScreen} />
+            <TopTab.Screen name="Process" component={ActiveOrderScreen} />
+            <TopTab.Screen name="Rent" component={RentOrderScreen} />
             <TopTab.Screen name="Completed" component={CompletedOrderScreen} />
         </TopTab.Navigator>
     );
@@ -76,8 +78,26 @@ function TabNavigation() {
             }}
         >
             <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name="Wishlist" component={FavoriteScreen} />
-            <Tab.Screen name="Order" component={TopTabNavigation} />
+            <Tab.Screen
+                name="Wishlist"
+                component={FavoriteScreen}
+                options={{
+                    headerShown: true,
+                    headerStyle: {
+                        height: 50,
+                    },
+                }}
+            />
+            <Tab.Screen
+                name="Order"
+                component={TopTabNavigation}
+                options={{
+                    headerShown: true,
+                    headerStyle: {
+                        height: 50,
+                    },
+                }}
+            />
             <Tab.Screen name="Profile" component={ProfileScreen} />
         </Tab.Navigator>
     );

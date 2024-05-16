@@ -28,6 +28,7 @@
     "expo-linear-gradient": "~12.7.2",
     "expo-status-bar": "~1.11.1",
     "jwt-decode": "^4.0.0",
+    "lottie-react-native": "^6.7.2",
     "react": "18.2.0",
     "react-hook-form": "^7.51.3",
     "react-native": "0.73.6",

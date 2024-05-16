@@ -21,8 +21,16 @@ import UserService from '../../services/konnyakuApi/UserService';
 
 export const ProductDetailScreen = ({ route, navigation }) => {
     const { theme } = useTheme();
-    const {id, name, description, priceAmount, weight, details, thumbnail, shop } =
-        route.params;
+    const {
+        id,
+        name,
+        description,
+        priceAmount,
+        weight,
+        details,
+        thumbnail,
+        shop,
+    } = route.params;
     const { width, height } = Dimensions.get('window');
     const [activeIndex, setActiveIndex] = useState(0);
     const [userAccountId, setUserAccountId] = useState(null);
@@ -87,7 +95,7 @@ export const ProductDetailScreen = ({ route, navigation }) => {
         thumbnail,
         shop,
         user,
-        userAccountId
+        userAccountId,
     };
 
     const scrollToActiveIndex = (index) => {
@@ -264,11 +272,15 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                                                 />
                                             </View>
                                         </Lightbox>
-                                        <View style={{ paddingHorizontal: 20 }}>
+                                        <View
+                                            style={{
+                                                paddingHorizontal: 20,
+                                                paddingVertical: 10,
+                                            }}
+                                        >
                                             <Text
                                                 style={{
-                                                    fontFamily:
-                                                        'poppins-semibold',
+                                                    fontFamily: 'poppins-bold',
                                                     fontSize: 20,
                                                 }}
                                             >
@@ -276,12 +288,13 @@ export const ProductDetailScreen = ({ route, navigation }) => {
                                             </Text>
                                             <Text
                                                 style={{
-                                                    fontFamily: 'poppins-bold',
+                                                    fontFamily:
+                                                        'poppins-semibold',
                                                     fontSize: 18,
                                                     marginBottom: -10,
                                                 }}
                                             >
-                                                {item.price}
+                                                {currencyFormat(item.price)}
                                             </Text>
                                             <RenderHTML
                                                 contentWidth={width}

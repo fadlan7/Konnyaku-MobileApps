@@ -38,33 +38,34 @@ export const OnboardingScreen = ({ navigation }) => {
                         image: (
                             <Image
                                 style={styles.image}
-                                source={require('../../shared/assets/images/without-bg.png')}
+                                source={require('../../shared/assets/images/mock.png')}
                             />
                         ),
-                        title: 'Onboarding',
-                        subtitle: 'Done with React Native Onboarding Swiper',
+                        title: 'Welcome to Konnyaku Apps',
+                        subtitle: `Browse through the huge collection of cosplay costumes and easily find your favorite character's costume`,
                     },
                     {
                         backgroundColor: theme.colors.secondary,
                         image: (
                             <Image
                                 style={styles.image}
-                                source={require('../../shared/assets/images/without-bg.png')}
+                                source={require('../../shared/assets/images/trust.png')}
                             />
                         ),
-                        title: 'Onboarding',
-                        subtitle: 'Done with React Native Onboarding Swiper',
+                        title: 'Trust is everything',
+                        subtitle: `Costume shops and customers upload photos of costumes before delivery and return`,
                     },
                     {
                         backgroundColor: theme.colors.info,
                         image: (
                             <Image
                                 style={styles.image}
-                                source={require('../../shared/assets/images/without-bg.png')}
+                                source={require('../../shared/assets/images/refund.png')}
                             />
                         ),
-                        title: 'Onboarding',
-                        subtitle: 'Done with React Native Onboarding Swiper',
+                        title: 'Refund and Fine Systems',
+                        subtitle:
+                            'If costume shops fail to fulfill the order, customers will receive a refund. Customers will be charged a fine for damaged or unreturned costumes. ',
                     },
                 ]}
             />
@@ -72,15 +73,16 @@ export const OnboardingScreen = ({ navigation }) => {
     );
 };
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
     image: {
-        width: width,
-        height: width,
+        width: 300,
+        height: 300,
+        marginTop: -100,
         resizeMode: 'contain',
     },
 });

@@ -143,7 +143,7 @@ export const HomeScreen = ({ navigation }) => {
                                         width: width,
                                         height: width,
                                     }}
-                                    source={require('../../shared/assets/images/login.png')}
+                                    source={require('../../shared/assets/images/no-data.png')}
                                     resizeMode="contain"
                                 />
                                 <Text

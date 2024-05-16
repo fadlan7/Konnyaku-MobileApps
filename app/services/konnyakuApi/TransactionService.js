@@ -16,7 +16,19 @@ const TransactionService = () => {
         }
     };
 
-    return { create };
+    const getAll = async (userId) => {
+        try {
+            const { data } = await apiClient({
+                url: `/api/transactions?userId=${userId}`,
+                method: 'get',
+            });
+            return data.data;
+        } catch (error) {
+            throw error;
+        }
+    };
+
+    return { create, getAll };
 };
 
 export default TransactionService;
