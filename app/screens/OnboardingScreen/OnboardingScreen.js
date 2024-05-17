@@ -65,7 +65,7 @@ export const OnboardingScreen = ({ navigation }) => {
                         ),
                         title: 'Refund and Fine Systems',
                         subtitle:
-                            'If costume shops fail to fulfill the order, customers will receive a refund. Customers will be charged a fine for damaged or unreturned costumes. ',
+                            'If costume shops fail to fulfill the order, customers will receive a refund. Customers will be charged a fine for damaged or unreturned costumes',
                     },
                 ]}
             />

@@ -83,9 +83,6 @@ function TabNavigation() {
                 component={FavoriteScreen}
                 options={{
                     headerShown: true,
-                    headerStyle: {
-                        height: 50,
-                    },
                 }}
             />
             <Tab.Screen
@@ -93,9 +90,6 @@ function TabNavigation() {
                 component={TopTabNavigation}
                 options={{
                     headerShown: true,
-                    headerStyle: {
-                        height: 50,
-                    },
                 }}
             />
             <Tab.Screen name="Profile" component={ProfileScreen} />

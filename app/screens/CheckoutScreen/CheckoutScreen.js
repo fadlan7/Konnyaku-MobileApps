@@ -86,10 +86,10 @@ export const CheckoutScreen = ({ route, navigation }) => {
                 'jne'
             );
             const costs = response.rajaongkir.results[0].costs[0].cost[0].value;
-            console.log(costs);
+            // console.log(costs);
             setShippingCost(costs);
         } catch (error) {
-            console.log('error fetching cost');
+            // console.log('error fetching cost');
         }
     };
 

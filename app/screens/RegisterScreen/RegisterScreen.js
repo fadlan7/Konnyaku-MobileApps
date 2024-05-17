@@ -311,6 +311,7 @@ export const RegisterScreen = ({ navigation }) => {
                         justifyContent: 'center',
                         alignItems: 'center',
                         paddingHorizontal: 15,
+                        backgroundColor: theme.colors.background,
                     }}
                 >
                     <Text

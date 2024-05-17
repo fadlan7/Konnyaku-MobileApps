@@ -29,14 +29,14 @@ export const ActiveOrderScreen = ({ navigation }) => {
     const fetchTransaction = async () => {
         try {
             const response = await transactionService.getAll(userId);
-            console.log(response.product);
+            // console.log(response.product);
 
             const newProducts = response.filter(
                 (orders) => orders.status === 'PROCESSING'
             );
 
             setProcessingProducts(newProducts);
-            console.log(newProducts.length);
+            // console.log(newProducts.length);
             setOrders(response);
         } catch (error) {
             Alert.alert('Error Fetching Orders');

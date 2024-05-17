@@ -22,6 +22,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { jwtDecode } from 'jwt-decode';
 import 'core-js/stable/atob';
 import ShopService from '../../services/konnyakuApi/ShopService';
+import AuthService from '../../services/konnyakuApi/AuthService';
 
 export const ShopRegistrationScreen = ({ navigation }) => {
     const schema = z.object({
@@ -70,6 +71,7 @@ export const ShopRegistrationScreen = ({ navigation }) => {
     const [cities, setCities] = useState([]);
     const [selectedCity, setSelectedCity] = useState({ id: '', name: '' });
     const [userAccId, setUserAccId] = useState('');
+    const authService = AuthService();
 
     const styles = useMemo(() =>
         StyleSheet.create({
@@ -176,8 +178,11 @@ export const ShopRegistrationScreen = ({ navigation }) => {
 
             if (response.data.statusCode === 201) {
                 clearForm();
-                navigation.replace('TabHome');
+
+                setUserAccId(null);
                 Alert.alert('Success', 'Registration Success');
+                authService.logout();
+                navigation.replace('Login');
             }
         } catch (error) {
             Alert.alert('Error', error.response.data.message);
