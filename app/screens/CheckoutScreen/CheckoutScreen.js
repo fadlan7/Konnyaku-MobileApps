@@ -127,7 +127,6 @@ export const CheckoutScreen = ({ route, navigation }) => {
         StyleSheet.create({
             container: {
                 flex: 1,
-                paddingBottom: 20,
                 backgroundColor: theme.colors.background,
             },
             headerContainer: {

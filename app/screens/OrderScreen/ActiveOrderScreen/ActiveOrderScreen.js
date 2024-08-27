@@ -32,16 +32,51 @@ export const ActiveOrderScreen = ({ navigation }) => {
             // console.log(response.product);
 
             const newProducts = response.filter(
-                (orders) => orders.status === 'PROCESSING'
+                (orders) =>
+                    orders.status === 'PROCESSING' ||
+                    orders.status === 'DELIVERING'
             );
 
             setProcessingProducts(newProducts);
-            // console.log(newProducts.length);
             setOrders(response);
         } catch (error) {
             Alert.alert('Error Fetching Orders');
         }
     };
+
+    // const handleTransactionStatus = async (id) => {
+    //     try {
+    //         Alert.alert('Logout', 'are you sure you ?', [
+    //             { style: 'cancel', text: 'Cancel' },
+    //             {
+    //                 style: 'default',
+    //                 text: 'Logout',
+    //                 onPress: async () => {
+    //                     const formData = {
+    //                         transactionId: id,
+    //                         status: 3,
+    //                     };
+
+    //                     const response =
+    //                         await transactionService.changeTransactionStatus(
+    //                             formData
+    //                         );
+
+    //                     if (response.statusCode === 200) {
+    //                         clearForm();
+    //                         navigation.replace('TabHome');
+    //                         Alert.alert(
+    //                             'Success',
+    //                             'Starting rent costume period'
+    //                         );
+    //                     }
+    //                 },
+    //             },
+    //         ]);
+    //     } catch (error) {
+    //         Alert.alert('Error', error.response.data.message);
+    //     }
+    // };
 
     const setId = async () => {
         const userAccountId = await localStorage.getData('userAccountId');
@@ -198,7 +233,7 @@ export const ActiveOrderScreen = ({ navigation }) => {
                                     fontFamily="poppins-semibold"
                                     fontSize={15}
                                     style={styles.customBtn}
-                                    // onPress={handleSubmit(onSubmit)}
+                                    // onPress={handleTransactionStatus(item.id)}
                                 />
                             </View>
                         </TouchableOpacity>

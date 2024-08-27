@@ -28,7 +28,21 @@ const TransactionService = () => {
         }
     };
 
-    return { create, getAll };
+    const changeTransactionStatus = async (formData) => {
+        try {
+            const { data } = await apiClient({
+                url: `/api/transactions/transaction-status`,
+                method: 'put',
+                data: formData,
+                multipart: false,
+            });
+            return data.data;
+        } catch (error) {
+            throw error;
+        }
+    };
+
+    return { create, getAll, changeTransactionStatus };
 };
 
 export default TransactionService;
